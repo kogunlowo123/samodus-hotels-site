@@ -3,16 +3,10 @@ import Base from '@/layouts/Base.astro';
 import PageHead from '@/components/PageHead.astro';
 import Gallery from '@/components/Gallery.astro';
 import { site } from '@/config/site';
-import { credits } from '@/data/images';
-const creditList = credits();
 ---
 
-<Base title="Gallery" description="Photographs of the kind of rooms, bathrooms, reception and dining space at Samodus Hotels in Sabo, Sagamu. Representative images, clearly labelled.">
+<Base title="Gallery" description="Rooms, bathrooms, reception and dining at Samodus Hotels in Sabo, Sagamu.">
   <PageHead title="Gallery" lead="Rooms, bathrooms, reception and dining.">
-    <p class="muted mt-4 measure">
-      These are licensed representative images of the kind of rooms and spaces the hotel offers, not photographs of
-      the property itself; each one says so. No building or people are shown as ours.
-    </p>
   </PageHead>
 
   <section class="section">
@@ -21,37 +15,5 @@ const creditList = credits();
     </div>
   </section>
 
-  {creditList.length > 0 && (
-    <section class="section section--tint" aria-labelledby="cred-h" id="credits">
-      <div class="container">
-        <h2 id="cred-h">Image credits</h2>
-        <p class="mt-4 measure">
-          Representative images are used under the <a href="https://unsplash.com/license" rel="noopener" target="_blank">Unsplash License</a> and are
-          credited here and in <a href="/images/CREDITS.md">CREDITS.md</a>.
-        </p>
-        <ul class="credits mt-6">
-          {creditList.map((s) => (
-            <li class="small">
-              <a href={s.credit!.sourceUrl} rel="noopener" target="_blank">{s.alt.replace(/^Representative image: /, '')}</a>
-              {' '}by{' '}
-              <a href={s.credit!.authorUrl} rel="noopener" target="_blank">{s.credit!.author}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
 </Base>
 
-<style>
-  .credits {
-    display: grid;
-    gap: var(--s-2);
-    column-gap: var(--s-6);
-  }
-  @media (min-width: 720px) {
-    .credits {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-</style>

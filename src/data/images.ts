@@ -80,24 +80,24 @@ export const images: Record<string, ImageSlot> = {
   // No exterior or guest slots: a stock building or stock people would read as this property and its guests.
   hero: stock(
     'room-a-1',
-    'Representative image: a hotel room with a bed, desk, chairs and a television',
+    'a hotel room with a bed, desk, chairs and a television',
     'rooms',
     { author: 'Aquilion Property', handle: 'aquilionproperty', slug: 'a-hotel-room-with-a-bed-desk-chairs-and-a-television-1EJXSLUfqU0' },
     'Representative image',
   ),
-  reception: stock('reception', 'Representative image: hotel reception desk with wooden furniture and seating', 'interiors', { author: 'Neon Wang', handle: 'neonwangphotography', slug: 'hotel-reception-desk-with-modern-wooden-furniture-and-seating-kfnWOD1Tbp8' }, 'Reception'),
-  lounge: stock('lounge', 'Representative image: chairs and table near a window', 'interiors', { author: 'Trac Vu', handle: 'tracminhvu', slug: 'black-and-gray-chairs-and-table-near-glass-window-vi59jclwSko' }, 'Lounge'),
-  corridor: stock('corridor', 'Representative image: a hallway with doors', 'interiors', { author: 'Tao Yuan', handle: 'peek_a_boo_who', slug: 'a-hallway-with-doors-4Vanfy8_jbw' }, 'Guest floor'),
+  reception: stock('reception', 'hotel reception desk with wooden furniture and seating', 'interiors', { author: 'Neon Wang', handle: 'neonwangphotography', slug: 'hotel-reception-desk-with-modern-wooden-furniture-and-seating-kfnWOD1Tbp8' }, 'Reception'),
+  lounge: stock('lounge', 'chairs and table near a window', 'interiors', { author: 'Trac Vu', handle: 'tracminhvu', slug: 'black-and-gray-chairs-and-table-near-glass-window-vi59jclwSko' }, 'Lounge'),
+  corridor: stock('corridor', 'a hallway with doors', 'interiors', { author: 'Tao Yuan', handle: 'peek_a_boo_who', slug: 'a-hallway-with-doors-4Vanfy8_jbw' }, 'Guest floor'),
 
-  'room-a-1': stock('room-a-1', 'Representative image: a hotel room with a bed, desk, chairs and a television', 'rooms', { author: 'Aquilion Property', handle: 'aquilionproperty', slug: 'a-hotel-room-with-a-bed-desk-chairs-and-a-television-1EJXSLUfqU0' }),
-  'room-a-2': stock('room-a-2', 'Representative image: a hotel room with a bed and a desk', 'rooms', { author: 'sidath vimukthi', handle: 'sidathkc', slug: 'a-hotel-room-with-a-bed-and-a-desk-xZKEqleFdnk' }),
-  'room-b-1': stock('room-b-1', 'Representative image: a hotel room with a large bed and a flat screen TV', 'rooms', { author: 'ikhbale', handle: 'ikhbale', slug: 'a-hotel-room-with-a-large-bed-and-a-flat-screen-tv-xMbzmWROWxE' }),
-  'room-b-2': stock('room-b-2', 'Representative image: a hotel room with a sofa, desk, television and curtains', 'rooms', { author: 'Rakib Khan', handle: 'rakibkhulna', slug: 'hotel-room-with-sofa-and-television-iFJBtZFUYcY' }),
-  'room-c-1': stock('room-c-1', 'Representative image: a hotel room with a bed, green runner and a wall-mounted air conditioner', 'rooms', { author: 'Rakib Khan', handle: 'rakibkhulna', slug: 'hotel-room-with-green-bed-runner-hlH6QyfdWZM' }),
-  'room-c-2': stock('room-c-2', 'Representative image: a hotel bedroom with a large bed and warm lighting', 'rooms', { author: 'Jazmin Wong', handle: 'jazziwong', slug: 'cozy-hotel-bedroom-with-a-large-bed-and-warm-lighting-TFXCpP5V3Ds' }),
+  'room-a-1': stock('room-a-1', 'a hotel room with a bed, desk, chairs and a television', 'rooms', { author: 'Aquilion Property', handle: 'aquilionproperty', slug: 'a-hotel-room-with-a-bed-desk-chairs-and-a-television-1EJXSLUfqU0' }),
+  'room-a-2': stock('room-a-2', 'a hotel room with a bed and a desk', 'rooms', { author: 'sidath vimukthi', handle: 'sidathkc', slug: 'a-hotel-room-with-a-bed-and-a-desk-xZKEqleFdnk' }),
+  'room-b-1': stock('room-b-1', 'a hotel room with a large bed and a flat screen TV', 'rooms', { author: 'ikhbale', handle: 'ikhbale', slug: 'a-hotel-room-with-a-large-bed-and-a-flat-screen-tv-xMbzmWROWxE' }),
+  'room-b-2': stock('room-b-2', 'a hotel room with a sofa, desk, television and curtains', 'rooms', { author: 'Rakib Khan', handle: 'rakibkhulna', slug: 'hotel-room-with-sofa-and-television-iFJBtZFUYcY' }),
+  'room-c-1': stock('room-c-1', 'a hotel room with a bed, green runner and a wall-mounted air conditioner', 'rooms', { author: 'Rakib Khan', handle: 'rakibkhulna', slug: 'hotel-room-with-green-bed-runner-hlH6QyfdWZM' }),
+  'room-c-2': stock('room-c-2', 'a hotel bedroom with a large bed and warm lighting', 'rooms', { author: 'Jazmin Wong', handle: 'jazziwong', slug: 'cozy-hotel-bedroom-with-a-large-bed-and-warm-lighting-TFXCpP5V3Ds' }),
 
-  bathroom: stock('bathroom', 'Representative image: a bathroom with tiled walls and a shower', 'bathrooms', { author: 'Mayur Roxan', handle: 'mayurroxanphotography', slug: 'a-bathroom-with-tiled-walls-and-a-shower-su0bkpknYpU' }, 'En-suite bathroom'),
-  dining: stock('dining', 'Representative image: a restaurant interior with set tables and chairs', 'dining', { author: 'R. G', handle: 'bored_mongoose', slug: 'a-modern-restaurant-interior-with-set-tables-and-chairs-IjYu7Qv6aSE' }, 'Dining'),
+  bathroom: stock('bathroom', 'a bathroom with tiled walls and a shower', 'bathrooms', { author: 'Mayur Roxan', handle: 'mayurroxanphotography', slug: 'a-bathroom-with-tiled-walls-and-a-shower-su0bkpknYpU' }, 'En-suite bathroom'),
+  dining: stock('dining', 'a restaurant interior with set tables and chairs', 'dining', { author: 'R. G', handle: 'bored_mongoose', slug: 'a-modern-restaurant-interior-with-set-tables-and-chairs-IjYu7Qv6aSE' }, 'Dining'),
 };
 
 /** Largest single URL for a slot (used by the lightbox and Open Graph). */
