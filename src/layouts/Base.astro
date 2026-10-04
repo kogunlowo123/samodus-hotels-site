@@ -96,6 +96,32 @@ const ldBlocks = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]
     <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
 
     {ldBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+
+    {site.google.searchConsoleToken && <meta name="google-site-verification" content={site.google.searchConsoleToken} />}
+    {site.google.ga4MeasurementId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.google.ga4MeasurementId}`}></script>
+        <script is:inline define:vars={{ id: site.google.ga4MeasurementId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', id, { anonymize_ip: true });
+          // Key events: calls, WhatsApp, directions, booking and enquiry actions
+          document.addEventListener('click', function (e) {
+            var a = e.target && e.target.closest ? e.target.closest('a,button') : null;
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            var name = href.startsWith('tel:') ? 'click_phone'
+              : href.includes('wa.me') ? 'click_whatsapp'
+              : href.includes('google.com/maps') || href.includes('maps.google') ? 'click_directions'
+              : href.startsWith('/book') ? 'click_book'
+              : a.matches('[data-submit]') ? 'reservation_inquiry'
+              : '';
+            if (name) gtag('event', name, { page_location: location.pathname });
+          });
+        </script>
+      </>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

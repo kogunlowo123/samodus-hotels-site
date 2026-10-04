@@ -14,39 +14,42 @@ const year = new Date().getFullYear();
           {site.address.state}, {site.address.country}
         </address>
         <p class="mt-4">
-          <a href={site.mapsDirectionsUrl} rel="noopener" target="_blank">Get directions<span class="visually-hidden"> (opens Google Maps)</span></a>
+          <a href={site.mapsDirectionsUrl} rel="noopener" target="_blank">Open in Google Maps<span class="visually-hidden"> (opens in new tab)</span></a>
         </p>
       </div>
 
-      <nav class="ftr__nav" aria-label="Footer">
+      <nav class="ftr__col" aria-labelledby="ftr-explore">
+        <p class="ftr__h" id="ftr-explore">Explore</p>
         <ul>
           <li><a href="/rooms">Rooms</a></li>
           <li><a href="/experience">Experience</a></li>
           <li><a href="/gallery">Gallery</a></li>
           <li><a href="/location">Location</a></li>
           <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/book">Book your stay</a></li>
+          <li><a href="/reviews">Guest reviews</a></li>
         </ul>
       </nav>
 
-      <div class="ftr__contact">
-        <p class="ftr__h">Reach the hotel</p>
-        <ul class="stack">
-          {hasPhone() && <li><a href={telHref()}>+{site.phone}</a></li>}
+      <nav class="ftr__col" aria-labelledby="ftr-reach">
+        <p class="ftr__h" id="ftr-reach">Reach the hotel</p>
+        <ul>
+          <li><a href="/book">Book your stay</a></li>
+          <li><a href="/contact">Contact</a></li>
+          {hasPhone() && <li><a href={telHref()}>Call +{site.phone}</a></li>}
           {hasWhatsApp() && <li><a href={whatsappHref()} rel="noopener">WhatsApp</a></li>}
           {hasEmail() && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
-          <li><a href="/book">Send a booking enquiry</a></li>
-          <li><a href="/reviews">Guest reviews</a></li>
+          <li><a href={site.mapsUrl} rel="noopener" target="_blank">Google listing<span class="visually-hidden"> (opens in new tab)</span></a></li>
         </ul>
-      </div>
+      </nav>
     </div>
 
     <hr class="rule ftr__rule" />
 
     <div class="ftr__bottom">
       <p class="small">© {year} {site.legalName}. Sabo, Sagamu, Ogun State.</p>
-      <p class="small"><a href="/privacy">Privacy</a></p>
+      <p class="small">
+        <a href="/privacy">Privacy</a> · <a href="/gallery#credits">Image credits</a>
+      </p>
     </div>
   </div>
 </footer>
@@ -88,12 +91,9 @@ const year = new Date().getFullYear();
     font-weight: 500;
     margin-bottom: var(--s-3);
   }
-  .ftr__nav ul {
+  .ftr__col ul {
     display: grid;
     gap: var(--s-2);
-  }
-  .ftr__contact .muted {
-    color: #aab3c5;
   }
   .ftr__rule {
     border-color: rgba(255, 255, 255, 0.15);

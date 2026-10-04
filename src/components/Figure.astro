@@ -32,8 +32,8 @@ const src = imageSrc(slot);
 const srcset = imageSrcset(slot);
 const lqip = imageLqip(slot);
 const ar = ratio ?? `${slot.width} / ${slot.height}`;
-const isStock = slot.kind === 'stock';
 const isPlaceholder = slot.kind === 'placeholder';
+void quiet; // overlay captions were removed; representative images are disclosed on the Gallery page and in alt text
 ---
 
 <figure class:list={['ph', 'ph--frame', cls]} style={`--ar:${ar}${lqip ? `;background-image:url(${lqip});background-size:cover` : ''}`}>
@@ -49,25 +49,5 @@ const isPlaceholder = slot.kind === 'placeholder';
     fetchpriority={priority ? 'high' : 'auto'}
   />
   {isPlaceholder && site.previewMode && <span class="ph__tag" aria-hidden="true">Photo pending</span>}
-  {isStock && !quiet && (
-    <span class="ph__rep">Representative image · hotel photography coming soon</span>
-  )}
   {caption && slot.caption && <figcaption class="ph__cap">{slot.caption}</figcaption>}
 </figure>
-
-<style>
-  .ph__rep {
-    position: absolute;
-    right: var(--s-2);
-    bottom: var(--s-2);
-    max-width: calc(100% - 1rem);
-    padding: 0.2em 0.55em;
-    border-radius: 3px;
-    background: rgba(27, 36, 64, 0.72);
-    color: #fff;
-    font-size: 0.6875rem;
-    line-height: 1.3;
-    letter-spacing: 0.01em;
-    pointer-events: none;
-  }
-</style>

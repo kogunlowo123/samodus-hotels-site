@@ -1,71 +1,54 @@
 ---
 /**
- * Loads the Google Maps embed only on request. Keeps third-party scripts off
- * the initial load and avoids setting Google cookies without a user action.
+ * Google Maps embed for the hotel's address, loaded lazily, with a direct
+ * link to open the listing in Google Maps for directions.
  */
 import { site, fullAddress } from '@/config/site';
 const embed = `https://maps.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=16&output=embed`;
 ---
 
-<div class="map" data-map>
-  <div class="map__ph">
-    <p class="serif map__addr">{fullAddress()}</p>
-    <div class="cluster">
-      <button type="button" class="btn btn--secondary" data-map-load data-src={embed}>Show map</button>
-      <a class="btn btn--ghost" href={site.mapsDirectionsUrl} target="_blank" rel="noopener">
-        Open in Google Maps<span class="visually-hidden"> (opens in new tab)</span>
-      </a>
-    </div>
-    <p class="small muted">Showing the map loads content from Google.</p>
+<div class="map">
+  <iframe
+    src={embed}
+    title="Map showing Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+  ></iframe>
+  <div class="map__bar">
+    <p class="map__addr">{fullAddress()}</p>
+    <a class="btn btn--secondary" href={site.mapsDirectionsUrl} target="_blank" rel="noopener">
+      Open in Google Maps<span class="visually-hidden"> (opens in new tab)</span>
+    </a>
   </div>
 </div>
 
 <style>
   .map {
-    position: relative;
+    display: grid;
+    gap: var(--s-3);
+  }
+  .map iframe {
+    width: 100%;
     aspect-ratio: 4 / 3;
-    background: var(--tint-2);
+    border: 0;
     border-radius: var(--radius);
-    overflow: hidden;
+    background: var(--tint-2);
   }
   @media (min-width: 720px) {
-    .map {
+    .map iframe {
       aspect-ratio: 16 / 10;
     }
   }
-  .map__ph {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    align-content: center;
-    gap: var(--s-4);
-    padding: var(--s-6);
+  .map__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
   }
   .map__addr {
-    font-size: var(--fs-2);
-  }
-  .map :global(iframe) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
+    font-family: var(--font-serif);
+    font-size: var(--fs-1);
   }
 </style>
-
-<script>
-  document.querySelectorAll<HTMLButtonElement>('[data-map-load]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const wrap = btn.closest<HTMLElement>('[data-map]');
-      if (!wrap) return;
-      const iframe = document.createElement('iframe');
-      iframe.src = btn.dataset.src || '';
-      iframe.title = 'Map showing Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu';
-      iframe.loading = 'lazy';
-      iframe.referrerPolicy = 'no-referrer-when-downgrade';
-      iframe.setAttribute('allowfullscreen', '');
-      wrap.innerHTML = '';
-      wrap.appendChild(iframe);
-    });
-  });
-</script>

@@ -49,6 +49,14 @@ export const site = {
     facebook: '',
   },
 
+  // Google integrations. Fill from your own Google screens; never share account passwords.
+  google: {
+    // GA4 Measurement ID, e.g. "G-XXXXXXXXXX" (Analytics → Admin → Data streams → Web).
+    ga4MeasurementId: '',
+    // Search Console HTML-tag verification token (the content="" value of the meta tag).
+    searchConsoleToken: '',
+  },
+
   // Preview notices and pending badges are off. Unverified items are simply not shown.
   previewMode: false,
 };

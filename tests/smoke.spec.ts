@@ -131,11 +131,18 @@ test('gallery filters and lightbox work with keyboard', async ({ page }) => {
   await expect(dlg).toHaveCount(0);
 });
 
-test('map embed loads only on request', async ({ page }) => {
+test('map embed is present with a Google Maps link', async ({ page }) => {
   await page.goto('/location');
-  expect(await page.locator('iframe').count()).toBe(0);
-  await page.getByRole('button', { name: 'Show map' }).first().click();
   await expect(page.locator('iframe[title*="Map showing"]').first()).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open in Google Maps/ }).first()).toHaveAttribute('href', /google\.com\/maps/);
+});
+
+test('every footer link resolves', async ({ page, request }) => {
+  await page.goto('/');
+  const hrefs = await page.locator('footer a[href^="/"]').evaluateAll((as) => as.map((a) => (a as HTMLAnchorElement).getAttribute('href')!));
+  for (const h of Array.from(new Set(hrefs.map((x) => x.split('#')[0])))) {
+    expect((await request.get(h)).status(), `footer link ${h}`).toBe(200);
+  }
 });
 
 test('sitemap and robots are served', async ({ request }) => {
