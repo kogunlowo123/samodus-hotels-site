@@ -78,3 +78,20 @@ The site links to the Google listing rather than copying quotes. If you want to 
 ## 9. Domain
 
 When the custom domain is bought, update `SITE_URL` in `render.yaml` and the Render dashboard, and the `Sitemap:` line in `public/robots.txt`.
+
+## 10. Google reviews on the site (added 4 Oct 2026)
+
+The home page and /reviews show the real Google rating and up to five real reviews once two values exist in the Render environment (service → Environment):
+
+| Variable | Where to get it |
+|---|---|
+| GOOGLE_PLACE_ID | Starts with ChIJ. After claiming the Business Profile it is shown in the dashboard, or use Google's Place ID Finder and search "Samodus hotel, Ademosun Street, Sagamu". Also paste it into placeId in src/config/site.ts so the Write a review button and the reception QR code link straight to the review form. |
+| PLACES_API_KEY | Google Cloud console, enable Places API (New), create a key restricted to that API. Never put it in the code. |
+
+The key is used only during the build; it is not shipped to the browser. Results are cached for 24 hours. To refresh the rating daily without a commit, add a Render deploy hook and call it from a daily cron.
+
+Reception card: open /reception-card on the live site and print to PDF (A5). Regenerate the QR after setting the place ID with: node scripts/make-qr.mjs
+
+## 11. Representative photographs
+
+Eleven interiors are licensed stock images with a visible caption. Replace each by dropping the hotel's own photo at public/images/<slot>.jpg and setting kind: 'real' in src/data/images.ts. Exterior, entrance, parking and guest slots have no stock stand-in on purpose.
