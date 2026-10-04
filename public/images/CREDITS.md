@@ -8,7 +8,7 @@ Interior photographs on samodus-hotels.onrender.com are licensed representative 
 | room-a-2 | sidath vimukthi | https://unsplash.com/@sidathkc | https://unsplash.com/photos/a-hotel-room-with-a-bed-and-a-desk-xZKEqleFdnk |
 | room-b-1 | ikhbale | https://unsplash.com/@ikhbale | https://unsplash.com/photos/a-hotel-room-with-a-large-bed-and-a-flat-screen-tv-xMbzmWROWxE |
 | room-b-2 | Rakib Khan | https://unsplash.com/@rakibkhulna | https://unsplash.com/photos/hotel-room-with-sofa-and-television-iFJBtZFUYcY |
-| room-c-1 | Ish Consul | https://unsplash.com/@ishconsul | https://unsplash.com/photos/a-bedroom-with-two-beds-and-a-balcony-ccKvfKSKH-k |
+| room-c-1 | Rakib Khan | https://unsplash.com/@rakibkhulna | https://unsplash.com/photos/hotel-room-with-green-bed-runner-hlH6QyfdWZM |
 | room-c-2 | Jazmin Wong | https://unsplash.com/@jazziwong | https://unsplash.com/photos/cozy-hotel-bedroom-with-a-large-bed-and-warm-lighting-TFXCpP5V3Ds |
 | bathroom | Mayur Roxan | https://unsplash.com/@mayurroxanphotography | https://unsplash.com/photos/a-bathroom-with-tiled-walls-and-a-shower-su0bkpknYpU |
 | reception | Neon Wang | https://unsplash.com/@neonwangphotography | https://unsplash.com/photos/hotel-reception-desk-with-modern-wooden-furniture-and-seating-kfnWOD1Tbp8 |

@@ -101,7 +101,7 @@ export const images: Record<string, ImageSlot> = {
   'room-a-2': stock('room-a-2', 'Representative image: a hotel room with a bed and a desk', 'rooms', { author: 'sidath vimukthi', handle: 'sidathkc', slug: 'a-hotel-room-with-a-bed-and-a-desk-xZKEqleFdnk' }),
   'room-b-1': stock('room-b-1', 'Representative image: a hotel room with a large bed and a flat screen TV', 'rooms', { author: 'ikhbale', handle: 'ikhbale', slug: 'a-hotel-room-with-a-large-bed-and-a-flat-screen-tv-xMbzmWROWxE' }),
   'room-b-2': stock('room-b-2', 'Representative image: a hotel room with a sofa, desk, television and curtains', 'rooms', { author: 'Rakib Khan', handle: 'rakibkhulna', slug: 'hotel-room-with-sofa-and-television-iFJBtZFUYcY' }),
-  'room-c-1': stock('room-c-1', 'Representative image: a bedroom with two beds and a balcony', 'rooms', { author: 'Ish Consul', handle: 'ishconsul', slug: 'a-bedroom-with-two-beds-and-a-balcony-ccKvfKSKH-k' }),
+  'room-c-1': stock('room-c-1', 'Representative image: a hotel room with a bed, green runner and a wall-mounted air conditioner', 'rooms', { author: 'Rakib Khan', handle: 'rakibkhulna', slug: 'hotel-room-with-green-bed-runner-hlH6QyfdWZM' }),
   'room-c-2': stock('room-c-2', 'Representative image: a hotel bedroom with a large bed and warm lighting', 'rooms', { author: 'Jazmin Wong', handle: 'jazziwong', slug: 'cozy-hotel-bedroom-with-a-large-bed-and-warm-lighting-TFXCpP5V3Ds' }),
 
   bathroom: stock('bathroom', 'Representative image: a bathroom with tiled walls and a shower', 'bathrooms', { author: 'Mayur Roxan', handle: 'mayurroxanphotography', slug: 'a-bathroom-with-tiled-walls-and-a-shower-su0bkpknYpU' }, 'En-suite bathroom'),

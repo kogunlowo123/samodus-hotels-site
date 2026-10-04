@@ -100,14 +100,14 @@
   },
   "room-c-1": {
     "width": 2400,
-    "height": 1351,
+    "height": 1349,
     "widths": [
       640,
       1024,
       1600,
       2400
     ],
-    "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAwBACdASoYAA0APu1iqU2ppaOiMAgBMB2JYgCdMoACapFD/PSpiDTMFXAA/cBdipyABVDRJKr9a+VOa7IwXPwxPuq9Em5QKYz1klJGGKsejpCN9YV+2G5+QS5x9/CfWhKGeCe+U3ciAAAA"
+    "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoYAA0APu1iqU2ppaOiMAgBMB2JaACdACGwsES6dQBZzAD+4Yl/tVe3Bku03uTyHMGBBCLEI8GgWNVyxjvXGiwgxlfQqtXm6wJGR+xjwU96bhx3Wib0pvZKauyv8cX5AAA="
   },
   "room-c-2": {
     "width": 2400,
