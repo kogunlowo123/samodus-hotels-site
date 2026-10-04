@@ -1,0 +1,20 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/config/site';
+---
+
+<Base title="Page not found" description="That page does not exist on the Samodus Hotels website." noindex stickyBar={false}>
+  <section class="section">
+    <div class="container stack">
+      <p class="ital" style="color: var(--bronze)">404</p>
+      <h1>That page is not here.</h1>
+      <p class="lead">The address may have been typed wrongly, or the page has moved.</p>
+      <div class="cluster">
+        <a class="btn" href="/">Go to the home page</a>
+        <a class="btn btn--secondary" href="/rooms">See rooms</a>
+        <a class="btn btn--ghost" href="/book">Book your stay</a>
+      </div>
+      <p class="muted small">{site.name}, {site.address.street}, {site.address.area}, {site.address.city}.</p>
+    </div>
+  </section>
+</Base>

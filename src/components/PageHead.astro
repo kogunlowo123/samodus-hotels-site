@@ -1,0 +1,26 @@
+---
+interface Props {
+  title: string;
+  lead?: string;
+  tint?: boolean;
+}
+const { title, lead, tint = false } = Astro.props;
+---
+
+<section class:list={['pgh', tint && 'pgh--tint']}>
+  <div class="container">
+    <h1>{title}</h1>
+    {lead && <p class="lead mt-4">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .pgh {
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .pgh--tint {
+    background: var(--tint);
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHead from '@/components/PageHead.astro';
+import Figure from '@/components/Figure.astro';
+import { site } from '@/config/site';
+---
+
+<Base title="About" description="About Samodus Hotels, an independent hotel at 15 Ademosu Street, Sabo, Sagamu, Ogun State.">
+  <PageHead title="About the hotel" lead="An independent hotel in a residential part of Sagamu, run for people who want somewhere clean, quiet and straightforward to stay." />
+
+  <section class="section">
+    <div class="container split">
+      <Figure image="exterior" caption sizes="(min-width: 720px) 42vw, 100vw" />
+      <div class="stack">
+        <h2>Who we are</h2>
+        <p>
+          Samodus Hotels sits on Ademosu Street in Sabo, Sagamu. The town is a trading and manufacturing centre on
+          the Lagos–Ibadan Expressway, long known for its kola nut markets, and the hotel serves the people that
+          brings through: workers on assignment, families for ceremonies, and travellers who would rather sleep
+          than push on through the night.
+        </p>
+        {site.previewMode && (
+          <div class="notice">
+            <p>
+              The hotel’s own story, opening year, ownership and team introductions will be written here once
+              confirmed. Nothing is invented in the meantime.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <h2>What we promise</h2>
+      </div>
+      <div class="grid grid-3">
+        <div class="stack">
+          <h3>Plain dealing</h3>
+          <p>The rate you are quoted is the rate you pay. If something in the room is not working, tell reception and it gets fixed or you get moved.</p>
+        </div>
+        <div class="stack">
+          <h3>Honest reviews</h3>
+          <p>We ask every guest for an honest review on Google, not a good one, and we reply to all of them.</p>
+        </div>
+        <div class="stack">
+          <h3>Direct contact</h3>
+          <p>You deal with the hotel itself. No agents, no booking fees, no call centre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <h2>Visit or get in touch</h2>
+      </div>
+      <div class="stack">
+        <p>{site.address.street}, {site.address.area}, {site.address.city}, {site.address.state}.</p>
+        <div class="cluster">
+          <a class="btn" href="/book">Book your stay</a>
+          <a class="btn btn--secondary" href="/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

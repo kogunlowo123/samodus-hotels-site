@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-label="Hotel exterior: photograph pending">
+<defs><pattern id="h" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="28" stroke="#cfd6e0" stroke-width="1"/></pattern></defs>
+<rect width="1600" height="1000" fill="#e2e7ee"/>
+<rect width="1600" height="1000" fill="url(#h)"/>
+<rect x="50" y="50" width="1500" height="900" fill="none" stroke="#1b2440" stroke-opacity="0.25" stroke-width="2"/>
+<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, 'Times New Roman', serif" font-size="71" fill="#1b2440">Hotel exterior</text>
+<text x="50%" y="567" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, Arial, sans-serif" font-size="30" fill="#5b6472">Photograph pending</text>
+</svg>

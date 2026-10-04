@@ -1,0 +1,61 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHead from '@/components/PageHead.astro';
+import InquiryForm from '@/components/InquiryForm.astro';
+import { site } from '@/config/site';
+---
+
+<Base title="Book your stay" description="Send a booking enquiry to Samodus Hotels, Sabo, Sagamu. The hotel replies with availability and the rate. No payment taken online." stickyBar={false}>
+  <PageHead title="Book your stay" lead="Send your dates. The hotel replies with availability and the rate, and you confirm directly with them." />
+
+  <section class="section">
+    <div class="container split">
+      <aside class="stack-lg bk__side">
+        <div class="stack">
+          <h2>How it works</h2>
+          <ol class="how">
+            <li>Send your dates and the number of guests.</li>
+            <li>The hotel replies with availability and the rate.</li>
+            <li>You confirm with the hotel and pay on their terms. Nothing is charged here.</li>
+          </ol>
+        </div>
+        <dl class="dl">
+          <dt>Check-in</dt>
+          <dd>{site.checkIn || 'To be confirmed'}</dd>
+          <dt>Check-out</dt>
+          <dd>{site.checkOut || 'To be confirmed'}</dd>
+        </dl>
+        <p class="small muted">We only use what you enter to reply to this enquiry. See the <a href="/privacy">privacy note</a>.</p>
+      </aside>
+
+      <InquiryForm variant="booking" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .how {
+    display: grid;
+    gap: var(--s-3);
+    counter-reset: n;
+  }
+  .how li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: var(--s-2);
+    counter-increment: n;
+  }
+  .how li::before {
+    content: counter(n) '.';
+    font-family: var(--font-serif);
+    font-size: var(--fs-2);
+    color: var(--bronze);
+    line-height: 1.3;
+  }
+  @media (min-width: 720px) {
+    .bk__side {
+      position: sticky;
+      top: 88px;
+    }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+/**
+ * Shown only while site.previewMode is true. Tells visitors, plainly, that
+ * photography and some details are still being confirmed by the hotel.
+ */
+import { site } from '@/config/site';
+---
+
+{site.previewMode && (
+  <div class="pv" role="status">
+    <div class="container pv__in">
+      <p>
+        This website is being completed. Photographs and some room details are still being confirmed by the hotel.
+        Contact details will be published as soon as they are verified.
+      </p>
+    </div>
+  </div>
+)}
+
+<style>
+  .pv {
+    background: var(--warn-bg);
+    color: var(--ink);
+    border-bottom: 1px solid #ecdcb0;
+    font-size: var(--fs--1);
+  }
+  .pv__in {
+    padding-block: var(--s-2);
+  }
+  .pv p {
+    max-width: none;
+  }
+</style>

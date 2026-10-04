@@ -1,0 +1,155 @@
+---
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/albert-sans';
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import PreviewNotice from '@/components/PreviewNotice.astro';
+import StickyBar from '@/components/StickyBar.astro';
+import { site, fullAddress } from '@/config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path for canonical; defaults to current URL. */
+  path?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  stickyBar?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = Astro.url.pathname,
+  ogImage = '/og-default.png',
+  noindex = false,
+  jsonLd,
+  stickyBar = true,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://samodus-hotels.onrender.com');
+const canonical = new URL(path.replace(/\/$/, '') || '/', siteUrl).toString();
+const ogUrl = new URL(ogImage, siteUrl).toString();
+const fullTitle = title === site.name ? `${site.name} | Hotel in Sabo, Sagamu` : `${title} | ${site.name}`;
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Hotel',
+  '@id': `${siteUrl}#hotel`,
+  name: site.name,
+  description: site.description,
+  url: siteUrl.toString(),
+  image: ogUrl,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${site.address.street}, ${site.address.area}`,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.countryCode,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  hasMap: site.mapsUrl,
+  ...(site.phone ? { telephone: `+${site.phone}` } : {}),
+  ...(site.email ? { email: site.email } : {}),
+  ...(site.checkIn ? { checkinTime: site.checkIn } : {}),
+  ...(site.checkOut ? { checkoutTime: site.checkOut } : {}),
+};
+
+const ldBlocks = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+---
+
+<!doctype html>
+<html lang="en-NG">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#1b2440" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name}, ${fullAddress()}`} />
+    <meta property="og:locale" content="en_NG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <meta name="geo.region" content="NG-OG" />
+    <meta name="geo.placename" content="Sagamu" />
+    <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
+
+    {ldBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <PreviewNotice />
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    {stickyBar && <StickyBar />}
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
+
+    <script>
+      const els = document.querySelectorAll<HTMLElement>('.reveal');
+      if (els.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                (e.target as HTMLElement).classList.add('is-in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-in'));
+      }
+
+      const toast = document.querySelector<HTMLElement>('[data-toast]');
+      let timer: number | undefined;
+      (window as unknown as { showToast: (m: string) => void }).showToast = (msg: string) => {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('is-on');
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => toast.classList.remove('is-on'), 4000);
+      };
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

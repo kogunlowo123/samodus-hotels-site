@@ -1,0 +1,227 @@
+---
+import { site, hasPhone, hasWhatsApp, telHref, whatsappHref } from '@/config/site';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/rooms', label: 'Rooms' },
+  { href: '/experience', label: 'Experience' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/location', label: 'Location' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="hdr" data-header>
+  <div class="container hdr__in">
+    <a class="hdr__brand" href="/" aria-label={`${site.name} home`}>
+      <span class="hdr__mark" aria-hidden="true">S</span>
+      <span class="hdr__name">Samodus <span>Hotels</span></span>
+    </a>
+
+    <nav class="hdr__nav" aria-label="Primary" id="primary-nav" data-nav>
+      <ul>
+        {links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="hdr__mobile-cta">
+        <a class="btn btn--block" href="/book">Book your stay</a>
+        {hasWhatsApp() && (
+          <a class="btn btn--secondary btn--block" href={whatsappHref('Hello Samodus Hotels, I would like to make an enquiry.')} rel="noopener">
+            WhatsApp the hotel
+          </a>
+        )}
+        {hasPhone() && (
+          <a class="btn btn--secondary btn--block" href={telHref()}>
+            Call the hotel
+          </a>
+        )}
+      </div>
+    </nav>
+
+    <div class="hdr__actions">
+      <a class="btn hdr__book" href="/book">Book now</a>
+      <button class="hdr__toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-nav-toggle>
+        <span class="visually-hidden">Menu</span>
+        <span class="hdr__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: saturate(1.2) blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .hdr__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-5);
+    min-height: 68px;
+  }
+  .hdr__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    text-decoration: none;
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  .hdr__mark {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 2px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  .hdr__name span {
+    color: var(--bronze);
+  }
+  .hdr__nav ul {
+    display: flex;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+  }
+  .hdr__nav a {
+    display: inline-block;
+    padding: var(--s-2) 0;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--ink-2);
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  .hdr__nav a:hover {
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .hdr__nav a[aria-current='page'] {
+    color: var(--ink);
+    border-color: var(--bronze);
+  }
+  .hdr__mobile-cta {
+    display: none;
+  }
+  .hdr__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+  }
+  .hdr__toggle {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius);
+  }
+  .hdr__bars {
+    display: grid;
+    gap: 5px;
+    width: 22px;
+    margin-inline: auto;
+  }
+  .hdr__bars i {
+    display: block;
+    height: 2px;
+    background: var(--ink);
+    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    transform-origin: center;
+  }
+  .hdr__toggle[aria-expanded='true'] i:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .hdr__toggle[aria-expanded='true'] i:nth-child(2) {
+    opacity: 0;
+  }
+  .hdr__toggle[aria-expanded='true'] i:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (max-width: 899px) {
+    .hdr__toggle {
+      display: block;
+    }
+    .hdr__book {
+      min-height: 40px;
+      padding: 0.5rem 0.9rem;
+      font-size: var(--fs--1);
+    }
+    .hdr__nav {
+      position: fixed;
+      inset: 68px 0 0 0;
+      z-index: 40;
+      background: var(--paper);
+      padding: var(--s-5) var(--gutter) calc(var(--s-8) + env(safe-area-inset-bottom));
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--s-6);
+    }
+    .hdr__nav.is-open {
+      display: flex;
+    }
+    .hdr__nav ul {
+      flex-direction: column;
+      gap: 0;
+    }
+    .hdr__nav li a {
+      display: block;
+      padding: var(--s-4) 0;
+      font-family: var(--font-serif);
+      font-size: var(--fs-3);
+      font-weight: 400;
+      border-bottom: 1px solid var(--line);
+    }
+    .hdr__nav li a[aria-current='page'] {
+      border-bottom-color: var(--line);
+      color: var(--bronze);
+    }
+    .hdr__mobile-cta {
+      display: grid;
+      gap: var(--s-3);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  if (toggle && nav) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('is-open', open);
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    const mq = window.matchMedia('(min-width: 900px)');
+    mq.addEventListener('change', (e) => e.matches && setOpen(false));
+  }
+</script>

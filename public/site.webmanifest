@@ -1,0 +1,13 @@
+{
+  "name": "Samodus Hotels",
+  "short_name": "Samodus",
+  "description": "Hotel at 15 Ademosu Street, Sabo, Sagamu, Ogun State.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#1b2440",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

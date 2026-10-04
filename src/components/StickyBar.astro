@@ -1,0 +1,54 @@
+---
+/**
+ * Mobile-only persistent action bar. Shows the two most useful actions.
+ */
+import { site, hasPhone, hasWhatsApp, telHref, whatsappHref } from '@/config/site';
+const primaryHref = hasWhatsApp()
+  ? whatsappHref('Hello Samodus Hotels, I would like to check availability.')
+  : '/book';
+const primaryLabel = hasWhatsApp() ? 'WhatsApp' : 'Send enquiry';
+const secondaryHref = hasPhone() ? telHref() : site.mapsDirectionsUrl;
+const secondaryLabel = hasPhone() ? 'Call' : 'Directions';
+const ext = (h: string) => h.startsWith('http');
+---
+
+<nav class="sb" aria-label="Quick actions" data-sticky-bar>
+  <a class="btn" href={primaryHref} rel={ext(primaryHref) ? 'noopener' : undefined}>{primaryLabel}</a>
+  <a
+    class="btn btn--secondary"
+    href={secondaryHref}
+    rel={ext(secondaryHref) ? 'noopener' : undefined}
+    target={ext(secondaryHref) ? '_blank' : undefined}
+  >
+    {secondaryLabel}{ext(secondaryHref) && <span class="visually-hidden"> (opens in new tab)</span>}
+  </a>
+</nav>
+
+<style>
+  .sb {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 45;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--gutter) calc(var(--s-3) + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+  }
+  @media (min-width: 900px) {
+    .sb {
+      display: none;
+    }
+  }
+</style>
+
+<style is:global>
+  @media (max-width: 899px) {
+    body:has(.sb) {
+      padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    }
+  }
+</style>

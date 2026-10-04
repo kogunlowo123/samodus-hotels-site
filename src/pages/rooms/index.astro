@@ -1,0 +1,48 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHead from '@/components/PageHead.astro';
+import RoomCard from '@/components/RoomCard.astro';
+import { rooms } from '@/data/rooms';
+import { site } from '@/config/site';
+---
+
+<Base title="Rooms" description="Air-conditioned, en-suite rooms at Samodus Hotels in Sabo, Sagamu. See each room type and send an enquiry for availability and rates.">
+  <PageHead
+    title="Rooms"
+    lead="Every room is air conditioned with its own bathroom and television. Pick a type, send your dates, and the hotel confirms availability and the rate directly."
+    tint
+  >
+    {site.previewMode && (
+      <div class="notice mt-6">
+        <p>
+          Room names, bed sizes, capacities and rates are being confirmed by the hotel. The entries below show what
+          will be published; nothing here is final yet.
+        </p>
+      </div>
+    )}
+  </PageHead>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        {rooms.map((r) => <RoomCard room={r} headingLevel="h2" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container split">
+      <h2>Good to know</h2>
+      <dl class="dl">
+        <dt>Check-in</dt>
+        <dd>{site.checkIn || 'To be confirmed'}</dd>
+        <dt>Check-out</dt>
+        <dd>{site.checkOut || 'To be confirmed'}</dd>
+        <dt>Payment</dt>
+        <dd>Settled directly with the hotel. No payment is taken on this website.</dd>
+        <dt>Rates</dt>
+        <dd>Quoted when you enquire, so they are always current.</dd>
+      </dl>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,56 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHead from '@/components/PageHead.astro';
+import MapLoader from '@/components/MapLoader.astro';
+import Figure from '@/components/Figure.astro';
+import { site, fullAddress, hasPhone, telHref } from '@/config/site';
+---
+
+<Base title="Location and directions" description="Samodus Hotels is at 15 Ademosu Street, Sabo, Sagamu, Ogun State, close to the Lagos–Ibadan Expressway. Directions from Lagos, Ibadan and Abeokuta.">
+  <PageHead title="Finding us" lead={fullAddress()} tint>
+    <div class="cluster mt-6">
+      <a class="btn" href={site.mapsDirectionsUrl} target="_blank" rel="noopener">
+        Get directions<span class="visually-hidden"> (opens Google Maps)</span>
+      </a>
+      {hasPhone() && <a class="btn btn--secondary" href={telHref()}>Call the hotel</a>}
+    </div>
+  </PageHead>
+
+  <section class="section">
+    <div class="container split">
+      <div class="stack-lg">
+        <div class="stack">
+          <h2>By road</h2>
+          <p>
+            Sagamu is on the Lagos–Ibadan Expressway, roughly 60 km from Lagos mainland and about 70 km from Ibadan.
+            Sabo is a residential area on the town side of the Sagamu interchange.
+          </p>
+          <dl class="dl">
+            <dt>From Lagos</dt>
+            <dd>Take the Lagos–Ibadan Expressway north. Exit at the Sagamu interchange and follow signs into Sagamu town. Use the directions link for the final turns to Ademosu Street.</dd>
+            <dt>From Ibadan</dt>
+            <dd>Take the expressway south. Exit at the Sagamu interchange and head into town.</dd>
+            <dt>From Abeokuta</dt>
+            <dd>Take the Abeokuta–Sagamu road east into Sagamu and follow the directions link into Sabo.</dd>
+          </dl>
+        </div>
+
+        <div class="stack">
+          <h2>On arrival</h2>
+          <p>Drive through the gate and park inside the compound. Reception is at the entrance.</p>
+          <p class="muted small">Gate hours, late arrival arrangements and landmark cues are being confirmed with the hotel and will be added here.</p>
+        </div>
+
+        <div class="stack">
+          <h2>Public transport</h2>
+          <p>Buses between Lagos, Ibadan and Abeokuta stop at Sagamu. From the motor park a short taxi or okada ride reaches Sabo. Tell the driver “Ademosu Street, Sabo”.</p>
+        </div>
+      </div>
+
+      <div class="stack-lg">
+        <MapLoader />
+        <Figure image="entrance" caption sizes="(min-width: 720px) 58vw, 100vw" />
+      </div>
+    </div>
+  </section>
+</Base>

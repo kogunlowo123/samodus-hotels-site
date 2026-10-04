@@ -1,0 +1,37 @@
+---
+/**
+ * Photography slot. Renders the real photo when available, otherwise a
+ * labelled placeholder frame. Never substitutes stock imagery.
+ */
+import { img, imageSrc, type ImageSlot } from '@/data/images';
+import { site } from '@/config/site';
+
+interface Props {
+  image: string | ImageSlot;
+  caption?: boolean;
+  priority?: boolean;
+  sizes?: string;
+  class?: string;
+  ratio?: string;
+}
+
+const { image: s, caption = false, priority = false, sizes = '(min-width: 1024px) 50vw, 100vw', class: cls = '', ratio } = Astro.props;
+const slot = typeof s === 'string' ? img(s) : s;
+const src = imageSrc(slot);
+const ar = ratio ?? `${slot.width} / ${slot.height}`;
+---
+
+<figure class:list={['ph', 'ph--frame', cls]} style={`--ar:${ar}`}>
+  <img
+    src={src}
+    alt={slot.alt}
+    width={slot.width}
+    height={slot.height}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    sizes={sizes}
+  />
+  {slot.placeholder && site.previewMode && <span class="ph__tag" aria-hidden="true">Photo pending</span>}
+  {caption && slot.caption && <figcaption class="ph__cap">{slot.caption}</figcaption>}
+</figure>

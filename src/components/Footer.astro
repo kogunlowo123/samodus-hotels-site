@@ -1,0 +1,113 @@
+---
+import { site, hasPhone, hasWhatsApp, hasEmail, telHref, whatsappHref } from '@/config/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class="container">
+    <div class="ftr__top">
+      <div class="ftr__addr">
+        <p class="ftr__name">Samodus Hotels</p>
+        <address class="ftr__street">
+          {site.address.street}<br />
+          {site.address.area}, {site.address.city}<br />
+          {site.address.state}, {site.address.country}
+        </address>
+        <p class="mt-4">
+          <a href={site.mapsDirectionsUrl} rel="noopener" target="_blank">Get directions<span class="visually-hidden"> (opens Google Maps)</span></a>
+        </p>
+      </div>
+
+      <nav class="ftr__nav" aria-label="Footer">
+        <ul>
+          <li><a href="/rooms">Rooms</a></li>
+          <li><a href="/experience">Experience</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/location">Location</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/book">Book your stay</a></li>
+        </ul>
+      </nav>
+
+      <div class="ftr__contact">
+        <p class="ftr__h">Reach the hotel</p>
+        <ul class="stack">
+          {hasPhone() ? (
+            <li><a href={telHref()}>+{site.phone}</a></li>
+          ) : (
+            <li class="muted">Phone number to be published</li>
+          )}
+          {hasWhatsApp() && <li><a href={whatsappHref()} rel="noopener">WhatsApp</a></li>}
+          {hasEmail() && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+          <li><a href="/book">Send a booking enquiry</a></li>
+          <li><a href={site.mapsReviewsUrl} rel="noopener" target="_blank">Reviews on Google<span class="visually-hidden"> (opens in new tab)</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule ftr__rule" />
+
+    <div class="ftr__bottom">
+      <p class="small">© {year} {site.legalName}. Sabo, Sagamu, Ogun State.</p>
+      <p class="small"><a href="/privacy">Privacy</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    background: var(--ink);
+    color: #dfe4ee;
+    padding-block: clamp(3rem, 6vw, 5rem) var(--s-6);
+    margin-top: auto;
+  }
+  .ftr a {
+    color: #fff;
+  }
+  .ftr__top {
+    display: grid;
+    gap: var(--s-7);
+  }
+  @media (min-width: 760px) {
+    .ftr__top {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+  .ftr__name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-3);
+    color: #fff;
+  }
+  .ftr__street {
+    margin-top: var(--s-3);
+    font-style: normal;
+    font-family: var(--font-serif);
+    font-size: var(--fs-2);
+    line-height: 1.35;
+    color: #fff;
+  }
+  .ftr__h {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: var(--s-3);
+  }
+  .ftr__nav ul {
+    display: grid;
+    gap: var(--s-2);
+  }
+  .ftr__contact .muted {
+    color: #aab3c5;
+  }
+  .ftr__rule {
+    border-color: rgba(255, 255, 255, 0.15);
+    margin-block: var(--s-7) var(--s-4);
+  }
+  .ftr__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-3);
+    color: #aab3c5;
+  }
+</style>

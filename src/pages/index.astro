@@ -1,0 +1,372 @@
+---
+import Base from '@/layouts/Base.astro';
+import Figure from '@/components/Figure.astro';
+import RoomCard from '@/components/RoomCard.astro';
+import Faq from '@/components/Faq.astro';
+import MapLoader from '@/components/MapLoader.astro';
+import { site, shortAddress } from '@/config/site';
+import { rooms } from '@/data/rooms';
+import { amenities } from '@/data/amenities';
+import { faqs } from '@/data/faqs';
+
+const shownAmenities = site.previewMode ? amenities : amenities.filter((a) => a.verified);
+const homeFaqs = faqs.slice(0, 5);
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: homeFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Base
+  title={site.name}
+  description="Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu, Ogun State. Air-conditioned rooms and parking inside the compound, a short drive from the Lagos–Ibadan Expressway. Book direct."
+  jsonLd={faqLd}
+>
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero__media">
+      <Figure image="hero" priority sizes="100vw" ratio="16 / 10" class="hero__img" />
+    </div>
+    <div class="container hero__wrap">
+      <div class="hero__panel">
+        <p class="hero__addr ital">{shortAddress()}</p>
+        <h1 id="hero-h">A quiet, well-kept place to stay in Sabo, Sagamu.</h1>
+        <p class="hero__sub">
+          An independent hotel on Ademosu Street. Air-conditioned rooms, parking inside the compound, and the
+          Lagos–Ibadan Expressway a short drive away.
+        </p>
+        <div class="cluster hero__cta">
+          <a class="btn" href="/book">Book your stay</a>
+          <a class="btn btn--on-dark" href="/rooms">Explore rooms</a>
+        </div>
+        <ul class="hero__trust">
+          <li>Book direct with the hotel</li>
+          <li>Listed on Google Maps</li>
+          <li>Replies by phone or WhatsApp</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="intro-h">
+    <div class="container split">
+      <div>
+        <h2 id="intro-h">Simple, comfortable, close to the road.</h2>
+      </div>
+      <div class="stack">
+        <p class="lead">
+          Samodus Hotels is for people who need a clean room, cold air conditioning, a safe place to park and a
+          good night’s sleep in Sagamu, without paying city-centre prices.
+        </p>
+        <p>
+          Sagamu sits where the Lagos–Ibadan Expressway meets the road to Abeokuta, which makes it a natural stop
+          for business travellers visiting the town’s industrial area, families attending ceremonies, and anyone
+          breaking a journey between Lagos, Ibadan and the north.
+        </p>
+        <p>
+          The hotel is in Sabo, a residential part of town, so nights are quiet. Rooms are air conditioned and
+          en-suite, and the compound is gated with parking inside.
+        </p>
+        <p><a href="/about">More about the hotel</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="rooms-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="rooms-h">Rooms</h2>
+        <p class="lead">
+          Each room has its own bathroom, air conditioning and television. Rates are confirmed directly with the
+          hotel when you enquire.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {rooms.map((r) => <RoomCard room={r} />)}
+      </div>
+      <p class="mt-6"><a class="btn btn--secondary" href="/rooms">See all rooms</a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Photographs of the hotel">
+    <div class="container strip">
+      <Figure image="reception" caption sizes="(min-width: 900px) 40vw, 100vw" />
+      <Figure image="room-a-1" sizes="(min-width: 900px) 60vw, 100vw" ratio="3 / 2" />
+    </div>
+  </section>
+
+  <section class="section section--ink" aria-labelledby="amen-h">
+    <div class="container split">
+      <div>
+        <h2 id="amen-h">What you get</h2>
+        {site.previewMode && (
+          <p class="muted mt-4 small">Items marked “to confirm” are being verified with the hotel before launch.</p>
+        )}
+      </div>
+      <ul class="amen">
+        {shownAmenities.map((a) => (
+          <li>
+            <h3 class="amen__name">
+              {a.name}
+              {!a.verified && site.previewMode && <span class="badge badge--pending">to confirm</span>}
+            </h3>
+            <p class="muted">{a.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="exp-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="exp-h">How a stay works</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Enquire</h3>
+          <p>Send your dates through the booking page or message the hotel directly. You get availability and the rate back, with no agent in between.</p>
+        </li>
+        <li>
+          <h3>Arrive</h3>
+          <p>Drive into the compound and park. Reception checks you in and walks you to your room.</p>
+        </li>
+        <li>
+          <h3>Rest</h3>
+          <p>Air conditioning, your own bathroom, television, and a quiet residential street outside.</p>
+        </li>
+        <li>
+          <h3>Go</h3>
+          <p>Back on the expressway in minutes, whether you are heading to Lagos, Ibadan or Abeokuta.</p>
+        </li>
+      </ol>
+      <div class="grid grid-2 mt-8">
+        <Figure image="guests-1" caption sizes="(min-width: 720px) 50vw, 100vw" />
+        <Figure image="lounge" caption sizes="(min-width: 720px) 50vw, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="loc-h">
+    <div class="container split">
+      <div class="stack">
+        <h2 id="loc-h">Sabo, Sagamu</h2>
+        <p class="lead">15 Ademosu Street, in the Sabo neighbourhood of Sagamu, Ogun State.</p>
+        <p>
+          Sagamu is on the Lagos–Ibadan Expressway. From Lagos, leave the expressway at the Sagamu interchange and
+          follow the road into town; Sabo is on the Sagamu side of the interchange. From Ibadan or Abeokuta the
+          approach is just as direct.
+        </p>
+        <div class="cluster">
+          <a class="btn" href={site.mapsDirectionsUrl} target="_blank" rel="noopener">
+            Get directions<span class="visually-hidden"> (opens Google Maps)</span>
+          </a>
+          <a class="btn btn--ghost" href="/location">Arrival details</a>
+        </div>
+      </div>
+      <MapLoader />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="rev-h">
+    <div class="container split">
+      <div>
+        <h2 id="rev-h">What guests say</h2>
+      </div>
+      <div class="stack">
+        <p class="lead">
+          Guest reviews live on our Google listing, where anyone who has stayed can write one and we reply to each.
+        </p>
+        <p>
+          We do not copy selected quotes onto this page. Read every review, good and bad, on Google, and after
+          your own stay please tell us honestly how it went.
+        </p>
+        <p>
+          <a class="btn btn--secondary" href={site.mapsReviewsUrl} target="_blank" rel="noopener">
+            Read reviews on Google<span class="visually-hidden"> (opens in new tab)</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="gal-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="gal-h">Around the hotel</h2>
+      </div>
+      <div class="grid grid-4">
+        <Figure image="exterior" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
+        <Figure image="room-b-1" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
+        <Figure image="bathroom" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
+        <Figure image="parking" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
+      </div>
+      <p class="mt-6"><a class="btn btn--secondary" href="/gallery">Open the gallery</a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-h">
+    <div class="container split">
+      <div>
+        <h2 id="faq-h">Questions guests ask</h2>
+        <p class="mt-4"><a href="/contact">Ask something else</a></p>
+      </div>
+      <Faq items={homeFaqs} />
+    </div>
+  </section>
+
+  <section class="section section--ink" aria-labelledby="cta-h">
+    <div class="container cta">
+      <div>
+        <h2 id="cta-h" class="display">Ready when you are.</h2>
+        <p class="lead" style="color:#c9d0dd">Send your dates and the hotel will confirm availability and the rate.</p>
+      </div>
+      <div class="cluster">
+        <a class="btn" href="/book">Book your stay</a>
+        <a class="btn btn--on-dark" href="/contact">Contact the hotel</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--ink);
+  }
+  .hero__media :global(.ph) {
+    border-radius: 0;
+  }
+  .hero__media :global(.ph--frame) {
+    aspect-ratio: 16 / 10;
+    max-height: 78vh;
+    width: 100%;
+  }
+  .hero__wrap {
+    position: relative;
+  }
+  .hero__panel {
+    background: var(--ink);
+    color: #fff;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    display: grid;
+    gap: var(--s-4);
+    max-width: 44rem;
+  }
+  .hero__addr {
+    color: var(--bronze-soft);
+    font-size: var(--fs-2);
+  }
+  .hero__sub {
+    font-size: var(--fs-1);
+    color: #dfe4ee;
+    max-width: 36em;
+  }
+  .hero__cta {
+    margin-top: var(--s-2);
+  }
+  .hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+    margin-top: var(--s-2);
+    font-size: var(--fs--1);
+    color: #b9c1d1;
+  }
+  .hero__trust li {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+  }
+  .hero__trust li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bronze);
+  }
+  @media (min-width: 900px) {
+    .hero__media :global(.ph--frame) {
+      aspect-ratio: auto;
+      height: 72vh;
+      max-height: 760px;
+    }
+    .hero__wrap {
+      margin-top: -9rem;
+    }
+    .hero__panel {
+      border-top: 4px solid var(--bronze);
+    }
+  }
+
+  .strip {
+    display: grid;
+    gap: var(--s-4);
+  }
+  @media (min-width: 900px) {
+    .strip {
+      grid-template-columns: 2fr 3fr;
+      align-items: end;
+    }
+  }
+
+  .amen {
+    display: grid;
+    gap: var(--s-5);
+  }
+  @media (min-width: 640px) {
+    .amen {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .amen__name {
+    font-size: var(--fs-2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2);
+  }
+
+  .steps {
+    display: grid;
+    gap: var(--s-6);
+    counter-reset: step;
+  }
+  @media (min-width: 720px) {
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .steps li {
+    counter-increment: step;
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--line);
+  }
+  .steps li::before {
+    content: counter(step);
+    display: block;
+    font-family: var(--font-serif);
+    font-size: var(--fs-3);
+    color: var(--bronze);
+    margin-bottom: var(--s-2);
+  }
+  .steps h3 {
+    margin-bottom: var(--s-2);
+  }
+
+  .cta {
+    display: grid;
+    gap: var(--s-6);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .cta {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>

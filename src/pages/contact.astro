@@ -1,0 +1,38 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHead from '@/components/PageHead.astro';
+import InquiryForm from '@/components/InquiryForm.astro';
+import MapLoader from '@/components/MapLoader.astro';
+import { site, fullAddress, hasPhone, hasWhatsApp, hasEmail, telHref, whatsappHref } from '@/config/site';
+---
+
+<Base title="Contact" description="Contact Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu. Phone, WhatsApp, directions and an enquiry form.">
+  <PageHead title="Contact the hotel" lead="Reach reception directly. For dates and rates, the booking page is quicker." />
+
+  <section class="section">
+    <div class="container split">
+      <div class="stack-lg">
+        <div class="stack">
+          <h2>Details</h2>
+          <dl class="dl">
+            <dt>Address</dt>
+            <dd>{fullAddress()}</dd>
+            <dt>Phone</dt>
+            <dd>{hasPhone() ? <a href={telHref()}>+{site.phone}</a> : <span class="muted">Being confirmed, published soon</span>}</dd>
+            <dt>WhatsApp</dt>
+            <dd>{hasWhatsApp() ? <a href={whatsappHref()} rel="noopener">Message on WhatsApp</a> : <span class="muted">Being confirmed, published soon</span>}</dd>
+            <dt>Email</dt>
+            <dd>{hasEmail() ? <a href={`mailto:${site.email}`}>{site.email}</a> : <span class="muted">Being confirmed, published soon</span>}</dd>
+            <dt>Google Maps</dt>
+            <dd><a href={site.mapsUrl} target="_blank" rel="noopener">View listing<span class="visually-hidden"> (opens in new tab)</span></a></dd>
+          </dl>
+        </div>
+        <MapLoader />
+      </div>
+
+      <div>
+        <InquiryForm variant="contact" heading="Send a message" />
+      </div>
+    </div>
+  </section>
+</Base>

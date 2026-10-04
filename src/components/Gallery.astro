@@ -1,0 +1,296 @@
+---
+/**
+ * Filterable grid with an accessible full-screen viewer (native <dialog>).
+ * Keyboard: arrows to move, Escape to close. Touch: swipe left/right.
+ */
+import Figure from '@/components/Figure.astro';
+import { images, imageSrc, type ImageSlot } from '@/data/images';
+
+interface Props {
+  ids?: string[];
+  filters?: boolean;
+}
+const { ids, filters = true } = Astro.props;
+const list: ImageSlot[] = (ids ? ids.map((i) => images[i]).filter(Boolean) : Object.values(images)) as ImageSlot[];
+
+const labels: Record<ImageSlot['category'], string> = {
+  exterior: 'Exterior',
+  rooms: 'Rooms',
+  interiors: 'Interiors',
+  bathrooms: 'Bathrooms',
+  dining: 'Dining',
+  guests: 'Guests',
+};
+const cats = Array.from(new Set(list.map((i) => i.category)));
+---
+
+<div class="gal" data-gallery>
+  {filters && cats.length > 1 && (
+    <div class="gal__filters" role="group" aria-label="Filter photographs">
+      <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">All</button>
+      {cats.map((c) => (
+        <button type="button" class="chip" data-filter={c} aria-pressed="false">{labels[c]}</button>
+      ))}
+    </div>
+  )}
+
+  <ul class="gal__grid">
+    {list.map((slot, i) => (
+      <li data-cat={slot.category} class:list={[slot.height > slot.width && 'is-tall']}>
+        <button
+          type="button"
+          class="gal__item"
+          data-open={i}
+          aria-label={`Open photograph: ${slot.caption ?? slot.alt}`}
+        >
+          <Figure image={slot} sizes="(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw" />
+        </button>
+        {slot.caption && <p class="ph__cap">{slot.caption}</p>}
+      </li>
+    ))}
+  </ul>
+
+  <dialog class="lb" data-lightbox aria-label="Photograph viewer">
+    <div class="lb__bar">
+      <p class="lb__count" data-lb-count></p>
+      <button type="button" class="lb__btn" data-lb-close aria-label="Close viewer">✕</button>
+    </div>
+    <div class="lb__stage" data-lb-stage>
+      <button type="button" class="lb__btn lb__nav lb__prev" data-lb-prev aria-label="Previous photograph">‹</button>
+      <figure class="lb__fig">
+        <img data-lb-img alt="" />
+        <figcaption data-lb-cap class="lb__cap"></figcaption>
+      </figure>
+      <button type="button" class="lb__btn lb__nav lb__next" data-lb-next aria-label="Next photograph">›</button>
+    </div>
+  </dialog>
+
+  <script type="application/json" data-lb-data set:html={JSON.stringify(list.map((s) => ({ src: imageSrc(s), alt: s.alt, cap: s.caption ?? '' })))} />
+</div>
+
+<style>
+  .gal__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin-bottom: var(--s-6);
+  }
+  .chip {
+    min-height: 40px;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .chip:hover {
+    border-color: var(--ink);
+  }
+  .chip.is-on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .gal__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    grid-auto-flow: dense;
+    gap: var(--s-4);
+  }
+  .gal__grid > li {
+    min-width: 0;
+  }
+  @media (min-width: 600px) {
+    .gal__grid li.is-tall {
+      grid-row: span 2;
+    }
+    .gal__grid li.is-tall :global(.ph--frame) {
+      height: 100%;
+      aspect-ratio: auto;
+    }
+  }
+  .gal__grid li[hidden] {
+    display: none;
+  }
+  .gal__item {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    border-radius: var(--radius);
+    text-align: left;
+  }
+
+  .lb {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: #0e1322;
+    color: #fff;
+  }
+  .lb::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .lb__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--s-3) var(--gutter);
+  }
+  .lb__count {
+    color: #c9d0dd;
+    font-size: var(--fs--1);
+  }
+  .lb__btn {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .lb__btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .lb__stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--s-3);
+    height: calc(100dvh - 72px);
+    padding: 0 var(--s-3) var(--s-5);
+    touch-action: pan-y;
+  }
+  .lb__fig {
+    display: grid;
+    gap: var(--s-3);
+    justify-items: center;
+    min-width: 0;
+    height: 100%;
+    align-content: center;
+  }
+  .lb__fig img {
+    max-height: calc(100dvh - 160px);
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .lb__cap {
+    color: #c9d0dd;
+    font-size: var(--fs--1);
+    text-align: center;
+  }
+  @media (max-width: 599px) {
+    .lb__nav {
+      position: absolute;
+      bottom: var(--s-5);
+      z-index: 1;
+    }
+    .lb__prev {
+      left: var(--s-4);
+    }
+    .lb__next {
+      right: var(--s-4);
+    }
+    .lb__stage {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  type Item = { src: string; alt: string; cap: string };
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const data: Item[] = JSON.parse(root.querySelector('[data-lb-data]')?.textContent || '[]');
+    const dlg = root.querySelector<HTMLDialogElement>('[data-lightbox]');
+    const img = root.querySelector<HTMLImageElement>('[data-lb-img]');
+    const cap = root.querySelector<HTMLElement>('[data-lb-cap]');
+    const count = root.querySelector<HTMLElement>('[data-lb-count]');
+    const stage = root.querySelector<HTMLElement>('[data-lb-stage]');
+    if (!dlg || !img || !cap || !count || !stage) return;
+
+    let visible: number[] = data.map((_, i) => i);
+    let pos = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (p: number) => {
+      pos = (p + visible.length) % visible.length;
+      const item = data[visible[pos]];
+      img.src = item.src;
+      img.alt = item.alt;
+      cap.textContent = item.cap;
+      count.textContent = `${pos + 1} of ${visible.length}`;
+    };
+    const open = (index: number, from: HTMLElement) => {
+      opener = from;
+      pos = Math.max(0, visible.indexOf(index));
+      show(pos);
+      dlg.showModal();
+    };
+    const close = () => {
+      dlg.close();
+      opener?.focus();
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((b) =>
+      b.addEventListener('click', () => open(Number(b.dataset.open), b)),
+    );
+    root.querySelector('[data-lb-close]')?.addEventListener('click', close);
+    root.querySelector('[data-lb-prev]')?.addEventListener('click', () => show(pos - 1));
+    root.querySelector('[data-lb-next]')?.addEventListener('click', () => show(pos + 1));
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) close();
+    });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(pos - 1);
+      if (e.key === 'ArrowRight') show(pos + 1);
+    });
+
+    let x0 = 0;
+    stage.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+    stage.addEventListener(
+      'touchend',
+      (e) => {
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) show(dx < 0 ? pos + 1 : pos - 1);
+      },
+      { passive: true },
+    );
+
+    const chips = root.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = root.querySelectorAll<HTMLLIElement>('.gal__grid > li');
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const f = chip.dataset.filter || 'all';
+        chips.forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle('is-on', on);
+          c.setAttribute('aria-pressed', String(on));
+        });
+        visible = [];
+        items.forEach((li, i) => {
+          const match = f === 'all' || li.dataset.cat === f;
+          li.hidden = !match;
+          if (match) visible.push(i);
+        });
+      }),
+    );
+  });
+</script>

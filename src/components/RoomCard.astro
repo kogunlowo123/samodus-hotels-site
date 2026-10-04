@@ -1,0 +1,61 @@
+---
+import Figure from '@/components/Figure.astro';
+import { formatNaira, type Room } from '@/data/rooms';
+import { site } from '@/config/site';
+
+interface Props {
+  room: Room;
+  headingLevel?: 'h2' | 'h3';
+}
+const { room, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+const showPending = !room.verified && site.previewMode;
+---
+
+<article class="card rc">
+  <Figure image={room.images[0]} sizes="(min-width: 1024px) 33vw, (min-width: 720px) 50vw, 100vw" />
+  <div class="card__body">
+    <Heading class="card__title">
+      <a href={`/rooms/${room.slug}`}>{room.name}</a>
+    </Heading>
+    {showPending && <span class="badge badge--pending">Details awaiting confirmation</span>}
+    <p class="muted">{room.summary}</p>
+    <ul class="rc__meta">
+      {room.sleeps && <li>Sleeps {room.sleeps}</li>}
+      {room.beds && room.beds !== 'To be confirmed' && <li>{room.beds}</li>}
+      {room.amenities.slice(0, 3).map((a) => <li>{a}</li>)}
+    </ul>
+    <div class="card__actions cluster">
+      {room.price !== null ? (
+        <span class="rc__price">
+          {formatNaira(room.price)} <span class="muted small">per night</span>
+        </span>
+      ) : (
+        <span class="muted small">Rate on request</span>
+      )}
+      <a class="btn btn--secondary" href={`/book?room=${room.slug}`}>Enquire</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .rc__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-4);
+    font-size: var(--fs--1);
+    color: var(--ink-2);
+  }
+  .rc__meta li + li::before {
+    content: '·';
+    margin-right: var(--s-4);
+    color: var(--slate);
+  }
+  .rc__price {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2);
+  }
+  .card__actions {
+    justify-content: space-between;
+  }
+</style>

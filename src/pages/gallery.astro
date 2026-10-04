@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHead from '@/components/PageHead.astro';
+import Gallery from '@/components/Gallery.astro';
+import { site } from '@/config/site';
+---
+
+<Base title="Gallery" description="Photographs of Samodus Hotels in Sabo, Sagamu: rooms, bathrooms, reception, exterior and parking.">
+  <PageHead title="Gallery" lead="Rooms, bathrooms, the compound and the street outside.">
+    {site.previewMode && (
+      <div class="notice mt-6">
+        <p>Photography of the hotel is being produced. Frames below mark exactly what will be photographed; none of them is a stock image.</p>
+      </div>
+    )}
+  </PageHead>
+
+  <section class="section">
+    <div class="container">
+      <Gallery />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,270 @@
+---
+/**
+ * Booking / contact enquiry form.
+ *
+ * Delivery, in order of preference:
+ *   1. WhatsApp: opens a chat with the hotel, message pre-filled (no server).
+ *   2. Email: opens the visitor's mail app with the enquiry pre-filled.
+ *   3. Neither configured yet: shows the composed enquiry with a copy button
+ *      and says plainly that direct contact details are coming.
+ *
+ * No data is stored on this website. Spam protection: honeypot field and a
+ * minimum fill time.
+ */
+import { rooms } from '@/data/rooms';
+import { site, hasWhatsApp, hasEmail } from '@/config/site';
+
+interface Props {
+  variant?: 'booking' | 'contact';
+  heading?: string;
+}
+const { variant = 'booking', heading } = Astro.props;
+const channel = hasWhatsApp() ? 'whatsapp' : hasEmail() ? 'email' : 'none';
+const today = new Date().toISOString().slice(0, 10);
+---
+
+<form
+  class="iq"
+  novalidate
+  data-inquiry
+  data-channel={channel}
+  data-whatsapp={site.whatsapp}
+  data-email={site.email}
+  data-variant={variant}
+  aria-describedby="iq-help"
+>
+  {heading && <h2 class="iq__h">{heading}</h2>}
+  <p id="iq-help" class="muted">
+    {variant === 'booking'
+      ? 'Tell us your dates and we will reply with availability and the rate. Nothing is charged through this website.'
+      : 'Send a question and the hotel will get back to you.'}
+  </p>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="iq-name">Your name</label>
+      <input class="input" id="iq-name" name="name" type="text" autocomplete="name" required minlength="2" />
+      <p class="field-error" id="iq-name-err" aria-live="polite"></p>
+    </div>
+
+    <div class="field">
+      <label for="iq-phone">Phone or WhatsApp number</label>
+      <input class="input" id="iq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="^[+0-9 ()-]{7,20}$" />
+      <p class="hint">So the hotel can reply quickly.</p>
+      <p class="field-error" id="iq-phone-err" aria-live="polite"></p>
+    </div>
+
+    {variant === 'booking' && (
+      <>
+        <div class="field">
+          <label for="iq-in">Check-in</label>
+          <input class="input" id="iq-in" name="checkin" type="date" min={today} required />
+          <p class="field-error" id="iq-in-err" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="iq-out">Check-out</label>
+          <input class="input" id="iq-out" name="checkout" type="date" min={today} required />
+          <p class="field-error" id="iq-out-err" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="iq-guests">Guests</label>
+          <select class="select" id="iq-guests" name="guests" required>
+            <option value="1">1 guest</option>
+            <option value="2" selected>2 guests</option>
+            <option value="3">3 guests</option>
+            <option value="4">4 guests</option>
+            <option value="5+">5 or more</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="iq-room">Room preference</label>
+          <select class="select" id="iq-room" name="room">
+            <option value="">No preference</option>
+            {rooms.map((r) => (
+              <option value={r.slug}>{r.name}</option>
+            ))}
+          </select>
+        </div>
+      </>
+    )}
+
+    <div class="field span-2">
+      <label for="iq-msg">{variant === 'booking' ? 'Anything else? (optional)' : 'Your message'}</label>
+      <textarea class="textarea" id="iq-msg" name="message" required={variant === 'contact'} maxlength="1000"></textarea>
+      <p class="field-error" id="iq-msg-err" aria-live="polite"></p>
+    </div>
+
+    <div class="honeypot" aria-hidden="true">
+      <label for="iq-website">Website</label>
+      <input id="iq-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="span-2 cluster">
+      <button class="btn" type="submit" data-submit>
+        {channel === 'whatsapp' ? 'Send on WhatsApp' : channel === 'email' ? 'Send by email' : 'Prepare enquiry'}
+      </button>
+      <p class="small muted">Your details go directly to the hotel. Nothing is stored on this website.</p>
+    </div>
+  </div>
+
+  <div class="notice notice--error mt-6" role="alert" data-form-error hidden></div>
+
+  <div class="iq__done" data-done hidden>
+    <div class="notice notice--ok">
+      <p class="serif" style="font-size: var(--fs-2)" data-done-title></p>
+      <p class="mt-2" data-done-text></p>
+    </div>
+    <div class="iq__compose mt-4" data-compose hidden>
+      <label for="iq-out-text" class="small muted">Your enquiry</label>
+      <textarea id="iq-out-text" class="textarea" readonly data-compose-text></textarea>
+      <div class="cluster mt-2">
+        <button type="button" class="btn btn--secondary" data-copy>Copy enquiry</button>
+        <a class="btn btn--ghost" href={site.mapsUrl} target="_blank" rel="noopener">Find the hotel on Google Maps<span class="visually-hidden"> (opens in new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</form>
+
+<style>
+  .iq {
+    position: relative;
+  }
+  .iq__h {
+    margin-bottom: var(--s-2);
+  }
+  .iq > .muted {
+    margin-bottom: var(--s-6);
+  }
+  .iq__compose textarea {
+    min-height: 180px;
+  }
+  .iq[data-sent='true'] .form-grid {
+    display: none;
+  }
+</style>
+
+<script>
+  type Toast = { showToast?: (m: string) => void };
+
+  document.querySelectorAll<HTMLFormElement>('[data-inquiry]').forEach((form) => {
+    const started = Date.now();
+    const channel = form.dataset.channel;
+    const variant = form.dataset.variant;
+    const errBox = form.querySelector<HTMLElement>('[data-form-error]')!;
+    const done = form.querySelector<HTMLElement>('[data-done]')!;
+    const compose = form.querySelector<HTMLElement>('[data-compose]')!;
+    const composeText = form.querySelector<HTMLTextAreaElement>('[data-compose-text]')!;
+
+    const params = new URLSearchParams(location.search);
+    const roomSel = form.querySelector<HTMLSelectElement>('#iq-room');
+    if (roomSel && params.get('room')) roomSel.value = params.get('room')!;
+
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('input, textarea, select'));
+
+    const setError = (el: HTMLElement, msg: string) => {
+      const err = form.querySelector<HTMLElement>(`#${el.id}-err`);
+      el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      if (err) err.textContent = msg;
+      if (msg) el.setAttribute('aria-describedby', `${el.id}-err`);
+    };
+
+    const messages: Record<string, string> = {
+      name: 'Enter your name.',
+      phone: 'Enter a phone number we can reach you on.',
+      checkin: 'Choose a check-in date.',
+      checkout: 'Choose a check-out date after check-in.',
+      message: 'Write a short message.',
+    };
+
+    const validate = () => {
+      let first: HTMLElement | null = null;
+      for (const el of fields) {
+        if (el.name === 'website' || el.closest('[data-compose]')) continue;
+        let msg = '';
+        if (!el.checkValidity()) msg = messages[el.name] || 'Check this field.';
+        if (el.name === 'checkout') {
+          const ci = (form.querySelector('#iq-in') as HTMLInputElement)?.value;
+          if (ci && el.value && el.value <= ci) msg = messages.checkout;
+        }
+        setError(el, msg);
+        if (msg && !first) first = el;
+      }
+      return first;
+    };
+
+    fields.forEach((el) => el.addEventListener('input', () => el.getAttribute('aria-invalid') === 'true' && validate()));
+
+    const buildMessage = (fd: FormData) => {
+      const get = (k: string) => String(fd.get(k) || '').trim();
+      const lines = [`Hello Samodus Hotels,`];
+      if (variant === 'booking') {
+        lines.push(`I would like to enquire about a stay.`);
+        lines.push(`Check-in: ${get('checkin')}`);
+        lines.push(`Check-out: ${get('checkout')}`);
+        lines.push(`Guests: ${get('guests')}`);
+        const roomLabel = roomSel?.selectedOptions[0]?.text;
+        if (get('room') && roomLabel) lines.push(`Room: ${roomLabel}`);
+      }
+      if (get('message')) lines.push(``, get('message'));
+      lines.push(``, `Name: ${get('name')}`, `Phone: ${get('phone')}`);
+      return lines.join('\n');
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errBox.hidden = true;
+
+      if ((form.elements.namedItem('website') as HTMLInputElement)?.value || Date.now() - started < 2000) {
+        errBox.textContent = 'Something went wrong. Please try again in a moment.';
+        errBox.hidden = false;
+        return;
+      }
+
+      const bad = validate();
+      if (bad) {
+        errBox.textContent = 'Please correct the highlighted fields.';
+        errBox.hidden = false;
+        bad.focus();
+        return;
+      }
+
+      const fd = new FormData(form);
+      const msg = buildMessage(fd);
+      const title = done.querySelector<HTMLElement>('[data-done-title]')!;
+      const text = done.querySelector<HTMLElement>('[data-done-text]')!;
+
+      if (channel === 'whatsapp') {
+        window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+        title.textContent = 'Opening WhatsApp';
+        text.textContent = 'Your enquiry is ready to send in WhatsApp. If it did not open, copy the text below and send it to the hotel.';
+      } else if (channel === 'email') {
+        const subject = variant === 'booking' ? 'Booking enquiry' : 'Enquiry';
+        location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
+        title.textContent = 'Opening your email app';
+        text.textContent = 'If nothing opened, copy the text below and email it to the hotel.';
+      } else {
+        title.textContent = 'Your enquiry is ready';
+        text.textContent =
+          'The hotel’s direct phone and WhatsApp number are being confirmed and will be published here shortly. Copy your enquiry below so it is ready to send the moment they are live, or use the Google Maps listing to reach the hotel.';
+      }
+
+      compose.hidden = false;
+      composeText.value = msg;
+      form.dataset.sent = 'true';
+      done.hidden = false;
+      done.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      title.setAttribute('tabindex', '-1');
+      title.focus();
+    });
+
+    form.querySelector('[data-copy]')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(composeText.value);
+        (window as Toast).showToast?.('Enquiry copied');
+      } catch {
+        composeText.select();
+        (window as Toast).showToast?.('Select the text and copy it');
+      }
+    });
+  });
+</script>
