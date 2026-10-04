@@ -83,7 +83,7 @@ export const images: Record<string, ImageSlot> = {
     'a hotel room with a bed, desk, chairs and a television',
     'rooms',
     { author: 'Aquilion Property', handle: 'aquilionproperty', slug: 'a-hotel-room-with-a-bed-desk-chairs-and-a-television-1EJXSLUfqU0' },
-    'Representative image',
+    'Guest room',
   ),
   reception: stock('reception', 'hotel reception desk with wooden furniture and seating', 'interiors', { author: 'Neon Wang', handle: 'neonwangphotography', slug: 'hotel-reception-desk-with-modern-wooden-furniture-and-seating-kfnWOD1Tbp8' }, 'Reception'),
   lounge: stock('lounge', 'chairs and table near a window', 'interiors', { author: 'Trac Vu', handle: 'tracminhvu', slug: 'black-and-gray-chairs-and-table-near-glass-window-vi59jclwSko' }, 'Lounge'),
