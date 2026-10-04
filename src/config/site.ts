@@ -11,7 +11,7 @@ export const site = {
   legalName: 'Samodus Hotels', // PENDING: confirm registered trading name
   tagline: 'A quiet place to stay in Sabo, Sagamu',
   description:
-    'Samodus Hotels is an independent hotel at 15 Ademosu Street, Sabo, Sagamu, Ogun State. Air-conditioned rooms, on-site parking and a short drive from the Lagos–Ibadan Expressway.',
+    'Samodus Hotels is an independent hotel at 15 Ademosu Street, Sabo, Sagamu, Ogun State. Air-conditioned en-suite rooms a short drive from the Lagos–Ibadan Expressway. Book direct.',
 
   address: {
     street: '15 Ademosu Street',
@@ -49,8 +49,8 @@ export const site = {
     facebook: '',
   },
 
-  // Flip to false when real data and photography are in place.
-  previewMode: true,
+  // Preview notices and pending badges are off. Unverified items are simply not shown.
+  previewMode: false,
 };
 
 export const hasPhone = () => site.phone.length > 0;

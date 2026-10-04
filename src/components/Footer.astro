@@ -33,11 +33,7 @@ const year = new Date().getFullYear();
       <div class="ftr__contact">
         <p class="ftr__h">Reach the hotel</p>
         <ul class="stack">
-          {hasPhone() ? (
-            <li><a href={telHref()}>+{site.phone}</a></li>
-          ) : (
-            <li class="muted">Phone number to be published</li>
-          )}
+          {hasPhone() && <li><a href={telHref()}>+{site.phone}</a></li>}
           {hasWhatsApp() && <li><a href={whatsappHref()} rel="noopener">WhatsApp</a></li>}
           {hasEmail() && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
           <li><a href="/book">Send a booking enquiry</a></li>

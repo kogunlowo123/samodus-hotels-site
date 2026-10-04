@@ -1,6 +1,6 @@
 # Samodus Hotels website
 
-Static site for Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu, Ogun State, Nigeria.
+Static site for Samodus Hotels (live at https://samodus.com), 15 Ademosu Street, Sabo, Sagamu, Ogun State, Nigeria.
 
 Built with Astro (static output), no client framework, self-hosted fonts, no analytics or trackers. Deployed on Render as a static site.
 

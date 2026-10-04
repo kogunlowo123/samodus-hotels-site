@@ -1,13 +1,10 @@
 /**
  * Room inventory.
  *
- * Samodus Hotels has not yet confirmed its room categories, bed types,
- * capacities, prices or policies. The three entries below are structural
- * placeholders so the owner can see exactly what the finished page needs.
- * While `verified` is false the UI shows an "awaiting confirmation" notice,
- * hides pricing, and never states capacity as fact.
- *
- * To publish real rooms: rename, fill every field, set verified: true.
+ * The hotel has not yet confirmed its room categories, bed types, capacities
+ * or rates, so the site lists rooms as one honest offering built only from
+ * what is known: air-conditioned, en-suite, with television. When the hotel
+ * supplies categories, add one entry per category here; the pages adapt.
  */
 
 export type Room = {
@@ -22,59 +19,31 @@ export type Room = {
   amenities: string[];
   bathroom: string;
   images: string[];
-  /** Nightly rate in naira. null = not published. */
+  /** Nightly rate in naira. null = quoted on enquiry. */
   price: number | null;
   policies: string[];
 };
 
 export const rooms: Room[] = [
   {
-    slug: 'room-type-one',
-    name: 'Room type one',
-    verified: false,
-    summary: 'Placeholder for the hotel’s entry-level room. Name, bed and rate to be confirmed.',
+    slug: 'guest-rooms',
+    name: 'Guest rooms',
+    verified: true,
+    summary: 'Air-conditioned rooms with their own bathroom and television, on a quiet residential street in Sabo.',
     description:
-      'This entry is a placeholder. Once Samodus Hotels confirms the room name, bed configuration, capacity and what is included, this text will describe the room plainly: what the bed is, where the window faces, what is in the bathroom, and what a guest can expect on arrival.',
-    beds: 'To be confirmed',
+      'Every room at Samodus Hotels is air conditioned, has its own bathroom and a television. Tell the hotel your dates and how many people are travelling, and it will reply with the room that fits, the bed arrangement and the nightly rate. Longer stays and group bookings for ceremonies are handled the same way, directly with reception.',
+    beds: 'Matched to your party when you enquire',
     sleeps: null,
     size: '',
     amenities: ['Air conditioning', 'En-suite bathroom', 'Television'],
-    bathroom: 'En-suite, details to be confirmed',
-    images: ['room-a-1', 'room-a-2', 'bathroom'],
+    bathroom: 'Private, en-suite',
+    images: ['room-a-1', 'room-a-2', 'room-b-1', 'room-b-2', 'room-c-1', 'room-c-2', 'bathroom'],
     price: null,
-    policies: [],
-  },
-  {
-    slug: 'room-type-two',
-    name: 'Room type two',
-    verified: false,
-    summary: 'Placeholder for the hotel’s mid-range room. Name, bed and rate to be confirmed.',
-    description:
-      'This entry is a placeholder. It will describe the second room category in plain terms once the hotel confirms its details.',
-    beds: 'To be confirmed',
-    sleeps: null,
-    size: '',
-    amenities: ['Air conditioning', 'En-suite bathroom', 'Television', 'Work desk'],
-    bathroom: 'En-suite, details to be confirmed',
-    images: ['room-b-1', 'room-b-2', 'bathroom'],
-    price: null,
-    policies: [],
-  },
-  {
-    slug: 'room-type-three',
-    name: 'Room type three',
-    verified: false,
-    summary: 'Placeholder for the hotel’s largest room. Name, bed and rate to be confirmed.',
-    description:
-      'This entry is a placeholder. It will describe the largest room category in plain terms once the hotel confirms its details.',
-    beds: 'To be confirmed',
-    sleeps: null,
-    size: '',
-    amenities: ['Air conditioning', 'En-suite bathroom', 'Television', 'Sitting area'],
-    bathroom: 'En-suite, details to be confirmed',
-    images: ['room-c-1', 'room-c-2', 'bathroom'],
-    price: null,
-    policies: [],
+    policies: [
+      'Rates and availability are confirmed directly by the hotel when you enquire.',
+      'No payment is taken on this website; you settle with the hotel.',
+      'Check-in and check-out times are given with your booking confirmation.',
+    ],
   },
 ];
 

@@ -8,8 +8,8 @@ import { site } from '@/config/site';
 const shown = site.previewMode ? amenities : amenities.filter((a) => a.verified);
 ---
 
-<Base title="Experience and amenities" description="What to expect at Samodus Hotels, Sabo, Sagamu: air-conditioned rooms, backup power, parking inside the compound and a quiet residential street.">
-  <PageHead title="The experience" lead="No spa, no pool, no fuss. A clean room that is cold when you walk in, a safe place for your car, staff who answer, and a quiet night." />
+<Base title="Experience and amenities" description="What to expect at Samodus Hotels, Sabo, Sagamu: air-conditioned en-suite rooms, generator backup and a quiet residential street.">
+  <PageHead title="The experience" lead="No spa, no pool, no fuss. A clean room that is cold when you walk in, a generator when the grid goes, and a quiet night." />
 
   <section class="section">
     <div class="container split">
@@ -36,10 +36,9 @@ const shown = site.previewMode ? amenities : amenities.filter((a) => a.verified)
       <div class="stack">
         <h2>Food and drink</h2>
         <p>
-          Details of meal service, hours and the menu are being confirmed with the hotel and will be published here.
-          Until then, ask when you book and the hotel will tell you what is available during your stay.
+          Meals and drinks are arranged through reception. Ask when you book what is available during your stay,
+          and about breakfast if you have an early start.
         </p>
-        {site.previewMode && <span class="badge badge--pending">To confirm</span>}
       </div>
       <Figure image="dining" caption sizes="(min-width: 720px) 58vw, 100vw" />
     </div>
@@ -57,7 +56,7 @@ const shown = site.previewMode ? amenities : amenities.filter((a) => a.verified)
         </div>
         <div class="stack">
           <h3>Families and guests at ceremonies</h3>
-          <p>In town for a wedding, naming or burial. Several rooms close together and parking for everyone inside the gate.</p>
+          <p>In town for a wedding, naming or burial. Several rooms close together, booked in one enquiry.</p>
         </div>
         <div class="stack">
           <h3>Travellers breaking a journey</h3>

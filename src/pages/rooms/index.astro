@@ -24,7 +24,7 @@ import { site } from '@/config/site';
 
   <section class="section">
     <div class="container">
-      <div class="grid grid-3">
+      <div class:list={['grid', rooms.length > 1 ? 'grid-3' : 'grid-2']}>
         {rooms.map((r) => <RoomCard room={r} headingLevel="h2" />)}
       </div>
     </div>
@@ -35,9 +35,9 @@ import { site } from '@/config/site';
       <h2>Good to know</h2>
       <dl class="dl">
         <dt>Check-in</dt>
-        <dd>{site.checkIn || 'To be confirmed'}</dd>
+        <dd>{site.checkIn || 'Given with your booking confirmation'}</dd>
         <dt>Check-out</dt>
-        <dd>{site.checkOut || 'To be confirmed'}</dd>
+        <dd>{site.checkOut || 'Given with your booking confirmation'}</dd>
         <dt>Payment</dt>
         <dd>Settled directly with the hotel. No payment is taken on this website.</dd>
         <dt>Rates</dt>

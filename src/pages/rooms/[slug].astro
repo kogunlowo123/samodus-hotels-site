@@ -75,7 +75,7 @@ const roomLd = {
             <dt>Bed</dt>
             <dd>{room.beds}</dd>
             <dt>Sleeps</dt>
-            <dd>{room.sleeps ?? 'To be confirmed'}</dd>
+            <dd>{room.sleeps ?? 'Rooms for one, two or more; say how many are travelling'}</dd>
             {room.size && (
               <>
                 <dt>Size</dt>
@@ -100,10 +100,7 @@ const roomLd = {
                 {room.policies.map((p) => <li>{p}</li>)}
               </ul>
             ) : (
-              <p class="muted">
-                Check-in and check-out times, cancellation terms and house rules will be listed here once the hotel
-                confirms them. Ask when you enquire and the hotel will tell you directly.
-              </p>
+              <p class="muted">Check-in and check-out times, cancellation terms and house rules are given with your booking confirmation.</p>
             )}
           </div>
         </div>

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Guest floor: photograph pending">
-<defs><pattern id="h" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="28" stroke="#cfd6e0" stroke-width="1"/></pattern></defs>
-<rect width="1200" height="900" fill="#e2e7ee"/>
-<rect width="1200" height="900" fill="url(#h)"/>
-<rect x="45" y="45" width="1110" height="810" fill="none" stroke="#1b2440" stroke-opacity="0.25" stroke-width="2"/>
-<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" fill="#1b2440">Guest floor</text>
-<text x="50%" y="511" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, Arial, sans-serif" font-size="27" fill="#5b6472">Photograph pending</text>
-</svg>

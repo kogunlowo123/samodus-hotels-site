@@ -3,9 +3,7 @@ import { test, expect, type Page } from '@playwright/test';
 const routes = [
   '/',
   '/rooms',
-  '/rooms/room-type-one',
-  '/rooms/room-type-two',
-  '/rooms/room-type-three',
+  '/rooms/guest-rooms',
   '/experience',
   '/gallery',
   '/location',
@@ -86,8 +84,8 @@ test('mobile navigation opens and closes with Escape', async ({ page, isMobile }
 });
 
 test('booking form validates and composes an enquiry', async ({ page }) => {
-  await page.goto('/book?room=room-type-two');
-  await expect(page.locator('#iq-room')).toHaveValue('room-type-two');
+  await page.goto('/book?room=guest-rooms');
+  await expect(page.locator('#iq-room')).toHaveValue('guest-rooms');
 
   await page.waitForTimeout(2100); // the form rejects submissions faster than 2s as spam
   await page.getByRole('button', { name: /Prepare enquiry|Send/ }).click();
@@ -103,7 +101,7 @@ test('booking form validates and composes an enquiry', async ({ page }) => {
   await expect(page.locator('[data-done]')).toBeVisible();
   const text = await page.locator('[data-compose-text]').inputValue();
   expect(text).toContain('Check-in: 2030-01-10');
-  expect(text).toContain('Room type two');
+  expect(text).toContain('Guest rooms');
 });
 
 test('availability band prefills the booking form', async ({ page }) => {

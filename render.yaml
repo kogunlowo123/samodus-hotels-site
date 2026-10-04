@@ -9,7 +9,7 @@ services:
       - key: NODE_VERSION
         value: 22.17.0
       - key: SITE_URL
-        value: https://samodus-hotels.onrender.com
+        value: https://samodus.com
     headers:
       - path: /*
         name: X-Content-Type-Options

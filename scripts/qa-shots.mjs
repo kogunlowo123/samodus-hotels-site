@@ -12,7 +12,7 @@ const base = 'http://localhost:4321';
 const out = process.argv[2] || path.join(process.cwd(), 'qa-shots');
 await mkdir(out, { recursive: true });
 
-const routes = ['/', '/rooms', '/rooms/room-type-one', '/experience', '/gallery', '/location', '/about', '/contact', '/book', '/404'];
+const routes = ['/', '/rooms', '/rooms/guest-rooms', '/experience', '/gallery', '/location', '/about', '/contact', '/book', '/404'];
 const profiles = [
   { name: 'desktop', opts: { viewport: { width: 1366, height: 900 } } },
   { name: 'phone', opts: { ...devices['Pixel 7'] } },

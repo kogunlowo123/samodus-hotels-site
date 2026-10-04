@@ -1,6 +1,6 @@
 /**
- * Frequently asked questions.
- * Answers containing "to be confirmed" are placeholders for the hotel to fill.
+ * Frequently asked questions. Answers state only what is known and point
+ * everything else to the enquiry, never to a future update.
  */
 
 export type Faq = { q: string; a: string };
@@ -11,31 +11,31 @@ export const faqs: Faq[] = [
     a: 'At 15 Ademosu Street in the Sabo area of Sagamu, Ogun State. Sagamu sits on the Lagos–Ibadan Expressway, roughly an hour from Lagos mainland in normal traffic and under an hour from Ibadan. Use the directions link on the Location page for turn-by-turn navigation.',
   },
   {
-    q: 'What are check-in and check-out times?',
-    a: 'To be confirmed by the hotel. Standard practice in Nigerian hotels is check-in from early afternoon and check-out by midday; the exact times will appear here once confirmed.',
+    q: 'How do I book?',
+    a: 'Send your dates through the Book page. The hotel replies with availability and the nightly rate, and you confirm directly with reception. There is no online payment on this website.',
   },
   {
-    q: 'Is there parking?',
-    a: 'Parking inside the compound is expected to be available for guests. Capacity to be confirmed.',
+    q: 'What are check-in and check-out times?',
+    a: 'They are given with your booking confirmation. If you expect to arrive late at night or need an early check-in, say so in your enquiry.',
   },
   {
     q: 'Is there power at night?',
-    a: 'The hotel operates backup power during outages. Generator hours and any limits are to be confirmed and will be stated plainly here.',
+    a: 'The hotel runs a generator when the public supply is off. Rooms are air conditioned.',
   },
   {
-    q: 'How do I book?',
-    a: 'Send an inquiry through the Book page or contact the hotel directly by phone or WhatsApp once those details are published. There is no online payment on this website; the hotel confirms availability and payment with you directly.',
+    q: 'Do rooms have their own bathroom?',
+    a: 'Yes. Every room is en-suite, with a television and air conditioning.',
+  },
+  {
+    q: 'Is there parking, Wi-Fi or food on site?',
+    a: 'Ask in your enquiry and reception will confirm what is available during your stay. Only facilities the hotel has confirmed to us are listed on this site.',
+  },
+  {
+    q: 'Can I book several rooms for a wedding or ceremony?',
+    a: 'Yes. Put the number of rooms and the dates in your enquiry and the hotel will quote for the group.',
   },
   {
     q: 'What payment methods are accepted?',
-    a: 'To be confirmed. Most hotels in the area accept cash, bank transfer and card on arrival.',
-  },
-  {
-    q: 'Can the hotel host events or meetings?',
-    a: 'To be confirmed. If the hotel has a hall or meeting space, its capacity and hire terms will be listed here.',
-  },
-  {
-    q: 'Is food available on site?',
-    a: 'To be confirmed. Meal service, hours and menu will be listed here once the hotel confirms them.',
+    a: 'Payment is made to the hotel, not through this website. Confirm the accepted methods, usually transfer or cash, when the hotel replies to your enquiry.',
   },
 ];

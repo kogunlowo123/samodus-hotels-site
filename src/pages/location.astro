@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import PageHead from '@/components/PageHead.astro';
 import MapLoader from '@/components/MapLoader.astro';
-import Figure from '@/components/Figure.astro';
 import { site, fullAddress, hasPhone, telHref } from '@/config/site';
 ---
 
@@ -37,8 +36,7 @@ import { site, fullAddress, hasPhone, telHref } from '@/config/site';
 
         <div class="stack">
           <h2>On arrival</h2>
-          <p>Drive through the gate and park inside the compound. Reception is at the entrance.</p>
-          <p class="muted small">Gate hours, late arrival arrangements and landmark cues are being confirmed with the hotel and will be added here.</p>
+          <p>Reception is at the entrance. If you expect to arrive late at night, say so when you book so the hotel is ready for you.</p>
         </div>
 
         <div class="stack">
@@ -49,7 +47,6 @@ import { site, fullAddress, hasPhone, telHref } from '@/config/site';
 
       <div class="stack-lg">
         <MapLoader />
-        <Figure image="entrance" caption sizes="(min-width: 720px) 58vw, 100vw" />
       </div>
     </div>
   </section>

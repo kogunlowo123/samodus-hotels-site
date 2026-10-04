@@ -10,7 +10,7 @@ import { site } from '@/config/site';
 
   <section class="section">
     <div class="container split">
-      <Figure image="exterior" caption sizes="(min-width: 720px) 42vw, 100vw" />
+      <Figure image="lounge" sizes="(min-width: 720px) 42vw, 100vw" ratio="4 / 3" />
       <div class="stack">
         <h2>Who we are</h2>
         <p>
@@ -19,14 +19,10 @@ import { site } from '@/config/site';
           brings through: workers on assignment, families for ceremonies, and travellers who would rather sleep
           than push on through the night.
         </p>
-        {site.previewMode && (
-          <div class="notice">
-            <p>
-              The hotel’s own story, opening year, ownership and team introductions will be written here once
-              confirmed. Nothing is invented in the meantime.
-            </p>
-          </div>
-        )}
+        <p>
+          The rooms are air conditioned and en-suite, a generator covers outages, and reception handles bookings
+          directly, so the rate you are quoted is the rate you pay.
+        </p>
       </div>
     </div>
   </section>

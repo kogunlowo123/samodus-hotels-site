@@ -2,9 +2,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// SITE_URL is set on Render (e.g. https://samodus-hotels.onrender.com).
-// Replace with the custom domain once purchased.
-const site = process.env.SITE_URL || 'https://samodus-hotels.onrender.com';
+// SITE_URL is set on Render to https://samodus.com (the live domain).
+
+const site = process.env.SITE_URL || 'https://samodus.com';
 
 export default defineConfig({
   site,

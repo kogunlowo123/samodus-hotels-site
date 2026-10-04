@@ -75,7 +75,7 @@ Gate hours, late arrival process, one or two nearby landmarks drivers recognise.
 
 The site links to the Google listing rather than copying quotes. If you want to quote a review on the site, get the reviewer's permission and add it with their first name only.
 
-## 9. Domain
+## 9. Domain (done: samodus.com is live; DNS at GoDaddy, TLS issued by Render)
 
 When the custom domain is bought, update `SITE_URL` in `render.yaml` and the Render dashboard, and the `Sitemap:` line in `public/robots.txt`.
 

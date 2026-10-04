@@ -28,7 +28,7 @@ const faqLd = {
 
 <Base
   title={site.name}
-  description="Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu, Ogun State. Air-conditioned rooms and parking inside the compound, a short drive from the Lagos–Ibadan Expressway. Book direct."
+  description="Samodus Hotels, 15 Ademosu Street, Sabo, Sagamu, Ogun State. Air-conditioned en-suite rooms with generator backup, a short drive from the Lagos–Ibadan Expressway. Book direct."
   jsonLd={faqLd}
 >
   <section class="hero" aria-labelledby="hero-h">
@@ -40,7 +40,7 @@ const faqLd = {
         <p class="hero__addr ital">{shortAddress()}</p>
         <h1 id="hero-h">A quiet, well-kept place to stay in Sabo, Sagamu.</h1>
         <p class="hero__sub">
-          An independent hotel on Ademosu Street. Air-conditioned rooms, parking inside the compound, and the
+          An independent hotel on Ademosu Street. Air-conditioned en-suite rooms, generator backup, and the
           Lagos–Ibadan Expressway a short drive away.
         </p>
         <div class="cluster hero__cta">
@@ -50,7 +50,7 @@ const faqLd = {
         <ul class="hero__trust">
           <li>Book direct with the hotel</li>
           <li>Listed on Google Maps</li>
-          <li>Replies by phone or WhatsApp</li>
+          <li>Air-conditioned, en-suite rooms</li>
         </ul>
       </div>
     </div>
@@ -92,8 +92,8 @@ const faqLd = {
       </div>
       <div class="stack">
         <p class="lead">
-          Samodus Hotels is for people who need a clean room, cold air conditioning, a safe place to park and a
-          good night’s sleep in Sagamu, without paying city-centre prices.
+          Samodus Hotels is for people who need a clean room, cold air conditioning and a good night’s sleep in
+          Sagamu, without paying city-centre prices.
         </p>
         <p>
           Sagamu sits where the Lagos–Ibadan Expressway meets the road to Abeokuta, which makes it a natural stop
@@ -102,7 +102,7 @@ const faqLd = {
         </p>
         <p>
           The hotel is in Sabo, a residential part of town, so nights are quiet. Rooms are air conditioned and
-          en-suite, and the compound is gated with parking inside.
+          en-suite, and a generator covers the hours when the public supply is off.
         </p>
         <p><a href="/about">More about the hotel</a></p>
       </div>
@@ -169,7 +169,7 @@ const faqLd = {
         </li>
         <li>
           <h3>Arrive</h3>
-          <p>Drive into the compound and park. Reception checks you in and walks you to your room.</p>
+          <p>Reception checks you in and shows you to your room. Tell them in advance if you will arrive late.</p>
         </li>
         <li>
           <h3>Rest</h3>
@@ -181,8 +181,8 @@ const faqLd = {
         </li>
       </ol>
       <div class="grid grid-2 mt-8">
-        <Figure image="guests-1" caption sizes="(min-width: 720px) 50vw, 100vw" />
-        <Figure image="lounge" caption sizes="(min-width: 720px) 50vw, 100vw" />
+        <Figure image="lounge" sizes="(min-width: 720px) 50vw, 100vw" ratio="4 / 3" />
+        <Figure image="corridor" sizes="(min-width: 720px) 50vw, 100vw" ratio="4 / 3" />
       </div>
     </div>
   </section>
@@ -217,11 +217,7 @@ const faqLd = {
       <div class="stack">
         <h2 id="bath-h">Your own bathroom</h2>
         <p class="lead">Every room is en-suite. Shower, toilet and basin behind your own door.</p>
-        <p class="muted">
-          Hot water availability, towels and toiletries are being confirmed with the hotel and will be listed here
-          plainly, including any hours that apply.
-        </p>
-        {site.previewMode && <span class="badge badge--pending">Details to confirm</span>}
+        <p class="muted">Ask reception about hot water hours and anything else you need for your stay when you book.</p>
       </div>
     </div>
   </section>
@@ -232,10 +228,10 @@ const faqLd = {
         <h2 id="gal-h">Around the hotel</h2>
       </div>
       <div class="grid grid-4">
-        <Figure image="exterior" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
         <Figure image="room-b-1" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
         <Figure image="bathroom" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
-        <Figure image="parking" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
+        <Figure image="reception" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
+        <Figure image="dining" sizes="(min-width: 1024px) 25vw, 50vw" ratio="1 / 1" />
       </div>
       <p class="mt-6"><a class="btn btn--secondary" href="/gallery">Open the gallery</a></p>
     </div>

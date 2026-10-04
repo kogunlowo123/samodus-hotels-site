@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /privacy
 
-Sitemap: https://samodus-hotels.onrender.com/sitemap-index.xml
+Sitemap: https://samodus.com/sitemap-index.xml

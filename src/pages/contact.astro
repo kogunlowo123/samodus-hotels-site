@@ -17,12 +17,26 @@ import { site, fullAddress, hasPhone, hasWhatsApp, hasEmail, telHref, whatsappHr
           <dl class="dl">
             <dt>Address</dt>
             <dd>{fullAddress()}</dd>
-            <dt>Phone</dt>
-            <dd>{hasPhone() ? <a href={telHref()}>+{site.phone}</a> : <span class="muted">Being confirmed, published soon</span>}</dd>
-            <dt>WhatsApp</dt>
-            <dd>{hasWhatsApp() ? <a href={whatsappHref()} rel="noopener">Message on WhatsApp</a> : <span class="muted">Being confirmed, published soon</span>}</dd>
-            <dt>Email</dt>
-            <dd>{hasEmail() ? <a href={`mailto:${site.email}`}>{site.email}</a> : <span class="muted">Being confirmed, published soon</span>}</dd>
+            {hasPhone() && (
+              <>
+                <dt>Phone</dt>
+                <dd><a href={telHref()}>+{site.phone}</a></dd>
+              </>
+            )}
+            {hasWhatsApp() && (
+              <>
+                <dt>WhatsApp</dt>
+                <dd><a href={whatsappHref()} rel="noopener">Message on WhatsApp</a></dd>
+              </>
+            )}
+            {hasEmail() && (
+              <>
+                <dt>Email</dt>
+                <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+              </>
+            )}
+            <dt>Enquiries</dt>
+            <dd>Through the form on this page or the <a href="/book">booking page</a>.</dd>
             <dt>Google Maps</dt>
             <dd><a href={site.mapsUrl} target="_blank" rel="noopener">View listing<span class="visually-hidden"> (opens in new tab)</span></a></dd>
           </dl>

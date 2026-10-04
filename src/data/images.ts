@@ -76,12 +76,8 @@ function stock(
   };
 }
 
-function placeholder(id: string, alt: string, category: ImageSlot['category'], width: number, height: number, caption?: string): ImageSlot {
-  return { id, alt, caption, width, height, kind: 'placeholder', category };
-}
-
 export const images: Record<string, ImageSlot> = {
-  // Exterior slots stay as placeholders: a stock building would read as "this is our building".
+  // No exterior or guest slots: a stock building or stock people would read as this property and its guests.
   hero: stock(
     'room-a-1',
     'Representative image: a hotel room with a bed, desk, chairs and a television',
@@ -89,10 +85,6 @@ export const images: Record<string, ImageSlot> = {
     { author: 'Aquilion Property', handle: 'aquilionproperty', slug: 'a-hotel-room-with-a-bed-desk-chairs-and-a-television-1EJXSLUfqU0' },
     'Representative image',
   ),
-  exterior: placeholder('exterior', 'Front of Samodus Hotels seen from the street', 'exterior', 1200, 900, 'Street frontage'),
-  entrance: placeholder('entrance', 'Main gate and entrance to Samodus Hotels', 'exterior', 1200, 900, 'Main entrance'),
-  parking: placeholder('parking', 'On-site car park inside the hotel compound', 'exterior', 1200, 900, 'Parking inside the compound'),
-
   reception: stock('reception', 'Representative image: hotel reception desk with wooden furniture and seating', 'interiors', { author: 'Neon Wang', handle: 'neonwangphotography', slug: 'hotel-reception-desk-with-modern-wooden-furniture-and-seating-kfnWOD1Tbp8' }, 'Reception'),
   lounge: stock('lounge', 'Representative image: chairs and table near a window', 'interiors', { author: 'Trac Vu', handle: 'tracminhvu', slug: 'black-and-gray-chairs-and-table-near-glass-window-vi59jclwSko' }, 'Lounge'),
   corridor: stock('corridor', 'Representative image: a hallway with doors', 'interiors', { author: 'Tao Yuan', handle: 'peek_a_boo_who', slug: 'a-hallway-with-doors-4Vanfy8_jbw' }, 'Guest floor'),
@@ -106,10 +98,6 @@ export const images: Record<string, ImageSlot> = {
 
   bathroom: stock('bathroom', 'Representative image: a bathroom with tiled walls and a shower', 'bathrooms', { author: 'Mayur Roxan', handle: 'mayurroxanphotography', slug: 'a-bathroom-with-tiled-walls-and-a-shower-su0bkpknYpU' }, 'En-suite bathroom'),
   dining: stock('dining', 'Representative image: a restaurant interior with set tables and chairs', 'dining', { author: 'R. G', handle: 'bored_mongoose', slug: 'a-modern-restaurant-interior-with-set-tables-and-chairs-IjYu7Qv6aSE' }, 'Dining'),
-
-  // People are never represented by stock photography.
-  'guests-1': placeholder('guests-1', 'Guests checking in at reception', 'guests', 1200, 900, 'Check-in'),
-  'guests-2': placeholder('guests-2', 'Guests relaxing in the lounge', 'guests', 1200, 1500, 'Lounge'),
 };
 
 /** Largest single URL for a slot (used by the lightbox and Open Graph). */
