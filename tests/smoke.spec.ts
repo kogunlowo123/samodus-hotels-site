@@ -105,6 +105,18 @@ test('booking form validates and composes an enquiry', async ({ page }) => {
   expect(text).toContain('Room type two');
 });
 
+test('availability band prefills the booking form', async ({ page }) => {
+  await page.goto('/');
+  await page.fill('#av-in', '2030-02-01');
+  await page.fill('#av-out', '2030-02-03');
+  await page.selectOption('#av-guests', '3');
+  await page.getByRole('button', { name: 'Check availability' }).click();
+  await expect(page).toHaveURL(/\/book\?/);
+  await expect(page.locator('#iq-in')).toHaveValue('2030-02-01');
+  await expect(page.locator('#iq-out')).toHaveValue('2030-02-03');
+  await expect(page.locator('#iq-guests')).toHaveValue('3');
+});
+
 test('gallery filters and lightbox work with keyboard', async ({ page }) => {
   await page.goto('/gallery');
   await page.getByRole('button', { name: 'Rooms', exact: true }).click();

@@ -10,6 +10,7 @@ import { amenities } from '@/data/amenities';
 import { faqs } from '@/data/faqs';
 
 const shownAmenities = site.previewMode ? amenities : amenities.filter((a) => a.verified);
+const today = new Date().toISOString().slice(0, 10);
 const homeFaqs = faqs.slice(0, 5);
 
 const faqLd = {
@@ -50,6 +51,35 @@ const faqLd = {
           <li>Replies by phone or WhatsApp</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- Availability band: date-first entry into the enquiry flow -->
+  <section class="avail" aria-labelledby="avail-h">
+    <div class="container">
+      <form class="avail__form" method="get" action="/book">
+        <h2 id="avail-h" class="avail__h">Check availability</h2>
+        <div class="field">
+          <label for="av-in">Check-in</label>
+          <input class="input" id="av-in" name="checkin" type="date" min={today} required />
+        </div>
+        <div class="field">
+          <label for="av-out">Check-out</label>
+          <input class="input" id="av-out" name="checkout" type="date" min={today} required />
+        </div>
+        <div class="field">
+          <label for="av-guests">Guests</label>
+          <select class="select" id="av-guests" name="guests">
+            <option value="1">1 guest</option>
+            <option value="2" selected>2 guests</option>
+            <option value="3">3 guests</option>
+            <option value="4">4 guests</option>
+            <option value="5+">5 or more</option>
+          </select>
+        </div>
+        <button class="btn avail__btn" type="submit">Check availability</button>
+        <p class="small muted avail__note">The hotel replies with availability and the rate. No payment online.</p>
+      </form>
     </div>
   </section>
 
@@ -301,6 +331,41 @@ const faqLd = {
     }
     .hero__panel {
       border-top: 4px solid var(--bronze);
+    }
+  }
+
+  .avail {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .avail__form {
+    display: grid;
+    gap: var(--s-4);
+    padding-block: var(--s-6);
+    align-items: end;
+  }
+  .avail__h {
+    font-size: var(--fs-3);
+  }
+  .avail__note {
+    margin: 0;
+  }
+  @media (min-width: 900px) {
+    .avail__form {
+      grid-template-columns: auto 1fr 1fr 1fr auto;
+      gap: var(--s-4) var(--s-5);
+    }
+    .avail__h {
+      align-self: center;
+      padding-right: var(--s-4);
+      border-right: 1px solid var(--line);
+      margin-right: var(--s-2);
+    }
+    .avail__btn {
+      align-self: end;
+    }
+    .avail__note {
+      grid-column: 2 / -1;
     }
   }
 

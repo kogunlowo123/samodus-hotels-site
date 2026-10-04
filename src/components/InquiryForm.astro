@@ -155,9 +155,15 @@ const today = new Date().toISOString().slice(0, 10);
     const compose = form.querySelector<HTMLElement>('[data-compose]')!;
     const composeText = form.querySelector<HTMLTextAreaElement>('[data-compose-text]')!;
 
+    // Prefill from the availability band on the home page (?checkin&checkout&guests&room)
     const params = new URLSearchParams(location.search);
     const roomSel = form.querySelector<HTMLSelectElement>('#iq-room');
     if (roomSel && params.get('room')) roomSel.value = params.get('room')!;
+    for (const [key, id] of [['checkin', '#iq-in'], ['checkout', '#iq-out'], ['guests', '#iq-guests']] as const) {
+      const v = params.get(key);
+      const el = form.querySelector<HTMLInputElement | HTMLSelectElement>(id);
+      if (v && el) el.value = v;
+    }
 
     const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('input, textarea, select'));
 

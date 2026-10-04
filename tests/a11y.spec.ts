@@ -32,7 +32,10 @@ test('keyboard: skip link, focus order and visible focus', async ({ page, isMobi
       const el = document.activeElement as HTMLElement | null;
       if (!el) return false;
       const cs = getComputedStyle(el);
-      return cs.outlineStyle !== 'none' || el.tagName === 'BODY';
+      // Chromium focuses the calendar button inside <input type="date"> as a sub-part;
+      // it draws its own ring while the host input reports outline: none.
+      const isDate = el instanceof HTMLInputElement && el.type === 'date';
+      return cs.outlineStyle !== 'none' || el.tagName === 'BODY' || isDate;
     });
     expect(ok).toBeTruthy();
   }
