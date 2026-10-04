@@ -11,7 +11,9 @@ interface Props {
   filters?: boolean;
 }
 const { ids, filters = true } = Astro.props;
-const list: ImageSlot[] = (ids ? ids.map((i) => images[i]).filter(Boolean) : Object.values(images)) as ImageSlot[];
+const raw: ImageSlot[] = (ids ? ids.map((i) => images[i]).filter(Boolean) : Object.values(images)) as ImageSlot[];
+// The hero slot reuses a room image; show each underlying image once.
+const list = raw.filter((s, i, arr) => arr.findIndex((t) => t.id === s.id) === i);
 
 const labels: Record<ImageSlot['category'], string> = {
   exterior: 'Exterior',
@@ -58,7 +60,8 @@ const cats = Array.from(new Set(list.map((i) => i.category)));
     <div class="lb__stage" data-lb-stage>
       <button type="button" class="lb__btn lb__nav lb__prev" data-lb-prev aria-label="Previous photograph">‹</button>
       <figure class="lb__fig">
-        <img data-lb-img alt="" />
+        <!-- src is set when the viewer opens; never ship an <img src=""> -->
+        <img data-lb-img alt="" hidden />
         <figcaption data-lb-cap class="lb__cap"></figcaption>
       </figure>
       <button type="button" class="lb__btn lb__nav lb__next" data-lb-next aria-label="Next photograph">›</button>
@@ -235,6 +238,7 @@ const cats = Array.from(new Set(list.map((i) => i.category)));
       const item = data[visible[pos]];
       img.src = item.src;
       img.alt = item.alt;
+      img.hidden = false;
       cap.textContent = item.cap;
       count.textContent = `${pos + 1} of ${visible.length}`;
     };

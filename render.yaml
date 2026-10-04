@@ -29,3 +29,16 @@ services:
       - path: /images/*
         name: Cache-Control
         value: public, max-age=604800
+    routes:
+      - type: redirect
+        source: /booking
+        destination: /book
+      - type: redirect
+        source: /index.html
+        destination: /
+      - type: redirect
+        source: /terms
+        destination: /privacy
+      - type: redirect
+        source: /rooms/index.html
+        destination: /rooms

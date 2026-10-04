@@ -4,6 +4,8 @@ import Figure from '@/components/Figure.astro';
 import RoomCard from '@/components/RoomCard.astro';
 import Faq from '@/components/Faq.astro';
 import MapLoader from '@/components/MapLoader.astro';
+import Reviews from '@/components/Reviews.astro';
+import Icon from '@/components/Icon.astro';
 import { site, shortAddress } from '@/config/site';
 import { rooms } from '@/data/rooms';
 import { amenities } from '@/data/amenities';
@@ -140,12 +142,15 @@ const faqLd = {
       </div>
       <ul class="amen">
         {shownAmenities.map((a) => (
-          <li>
-            <h3 class="amen__name">
-              {a.name}
-              {!a.verified && site.previewMode && <span class="badge badge--pending">to confirm</span>}
-            </h3>
-            <p class="muted">{a.detail}</p>
+          <li class="amen__item">
+            <Icon name={a.id} />
+            <div>
+              <h3 class="amen__name">
+                {a.name}
+                {!a.verified && site.previewMode && <span class="badge badge--pending">to confirm</span>}
+              </h3>
+              <p class="muted">{a.detail}</p>
+            </div>
           </li>
         ))}
       </ul>
@@ -203,24 +208,20 @@ const faqLd = {
     </div>
   </section>
 
-  <section class="section" aria-labelledby="rev-h">
-    <div class="container split">
-      <div>
-        <h2 id="rev-h">What guests say</h2>
-      </div>
+  <Reviews />
+
+  <!-- Bathroom band -->
+  <section class="section section--tint" aria-labelledby="bath-h">
+    <div class="container split split--rev">
+      <Figure image="bathroom" sizes="(min-width: 720px) 58vw, 100vw" ratio="4 / 3" />
       <div class="stack">
-        <p class="lead">
-          Guest reviews live on our Google listing, where anyone who has stayed can write one and we reply to each.
+        <h2 id="bath-h">Your own bathroom</h2>
+        <p class="lead">Every room is en-suite. Shower, toilet and basin behind your own door.</p>
+        <p class="muted">
+          Hot water availability, towels and toiletries are being confirmed with the hotel and will be listed here
+          plainly, including any hours that apply.
         </p>
-        <p>
-          We do not copy selected quotes onto this page. Read every review, good and bad, on Google, and after
-          your own stay please tell us honestly how it went.
-        </p>
-        <p>
-          <a class="btn btn--secondary" href={site.mapsReviewsUrl} target="_blank" rel="noopener">
-            Read reviews on Google<span class="visually-hidden"> (opens in new tab)</span>
-          </a>
-        </p>
+        {site.previewMode && <span class="badge badge--pending">Details to confirm</span>}
       </div>
     </div>
   </section>
@@ -388,6 +389,18 @@ const faqLd = {
     .amen {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
+  .amen__item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: var(--s-3);
+    align-items: start;
+  }
+  .amen__item :global(svg) {
+    width: 28px;
+    height: 28px;
+    color: var(--bronze-soft);
+    margin-top: 0.15em;
   }
   .amen__name {
     font-size: var(--fs-2);

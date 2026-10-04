@@ -27,6 +27,9 @@ export const site = {
 
   // Public Google Maps listing (verified to exist on 4 Oct 2026).
   mapsUrl: 'https://maps.google.com/?cid=1250600010553895656',
+  // PENDING: Google Place ID (starts with "ChIJ"). Enables the direct
+  // write-a-review link and the Places API rating. Empty = fall back to the listing.
+  placeId: '',
   mapsDirectionsUrl:
     'https://www.google.com/maps/dir/?api=1&destination=6.842347,3.6355217',
   mapsReviewsUrl: 'https://maps.google.com/?cid=1250600010553895656',
@@ -61,6 +64,10 @@ export function whatsappHref(message?: string) {
   const base = `https://wa.me/${site.whatsapp}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
+
+/** Direct "write a review" link when the place ID is known, else the listing. */
+export const writeReviewUrl = () =>
+  site.placeId ? `https://search.google.com/local/writereview?placeid=${site.placeId}` : site.mapsUrl;
 
 export const fullAddress = () =>
   `${site.address.street}, ${site.address.area}, ${site.address.city}, ${site.address.state}, ${site.address.country}`;

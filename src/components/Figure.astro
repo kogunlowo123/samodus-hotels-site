@@ -1,9 +1,10 @@
 ---
 /**
- * Photography slot. Renders the real photo when available, otherwise a
- * labelled placeholder frame. Never substitutes stock imagery.
+ * Photography slot. Renders the hotel's own photo, a credited licensed stock
+ * image with a visible "Representative image" caption, or a labelled
+ * placeholder frame. Never passes stock off as the property.
  */
-import { img, imageSrc, type ImageSlot } from '@/data/images';
+import { img, imageSrc, imageSrcset, imageLqip, type ImageSlot } from '@/data/images';
 import { site } from '@/config/site';
 
 interface Props {
@@ -13,25 +14,60 @@ interface Props {
   sizes?: string;
   class?: string;
   ratio?: string;
+  /** Hide the representative-image caption (e.g. inside the hero where the panel says it). */
+  quiet?: boolean;
 }
 
-const { image: s, caption = false, priority = false, sizes = '(min-width: 1024px) 50vw, 100vw', class: cls = '', ratio } = Astro.props;
+const {
+  image: s,
+  caption = false,
+  priority = false,
+  sizes = '(min-width: 1024px) 50vw, 100vw',
+  class: cls = '',
+  ratio,
+  quiet = false,
+} = Astro.props;
 const slot = typeof s === 'string' ? img(s) : s;
 const src = imageSrc(slot);
+const srcset = imageSrcset(slot);
+const lqip = imageLqip(slot);
 const ar = ratio ?? `${slot.width} / ${slot.height}`;
+const isStock = slot.kind === 'stock';
+const isPlaceholder = slot.kind === 'placeholder';
 ---
 
-<figure class:list={['ph', 'ph--frame', cls]} style={`--ar:${ar}`}>
+<figure class:list={['ph', 'ph--frame', cls]} style={`--ar:${ar}${lqip ? `;background-image:url(${lqip});background-size:cover` : ''}`}>
   <img
     src={src}
+    srcset={srcset}
+    sizes={srcset ? sizes : undefined}
     alt={slot.alt}
     width={slot.width}
     height={slot.height}
     loading={priority ? 'eager' : 'lazy'}
     decoding={priority ? 'sync' : 'async'}
     fetchpriority={priority ? 'high' : 'auto'}
-    sizes={sizes}
   />
-  {slot.placeholder && site.previewMode && <span class="ph__tag" aria-hidden="true">Photo pending</span>}
+  {isPlaceholder && site.previewMode && <span class="ph__tag" aria-hidden="true">Photo pending</span>}
+  {isStock && !quiet && (
+    <span class="ph__rep">Representative image · hotel photography coming soon</span>
+  )}
   {caption && slot.caption && <figcaption class="ph__cap">{slot.caption}</figcaption>}
 </figure>
+
+<style>
+  .ph__rep {
+    position: absolute;
+    right: var(--s-2);
+    bottom: var(--s-2);
+    max-width: calc(100% - 1rem);
+    padding: 0.2em 0.55em;
+    border-radius: 3px;
+    background: rgba(27, 36, 64, 0.72);
+    color: #fff;
+    font-size: 0.6875rem;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    pointer-events: none;
+  }
+</style>

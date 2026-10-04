@@ -3,13 +3,19 @@ import Base from '@/layouts/Base.astro';
 import PageHead from '@/components/PageHead.astro';
 import Gallery from '@/components/Gallery.astro';
 import { site } from '@/config/site';
+import { credits } from '@/data/images';
+const creditList = credits();
 ---
 
-<Base title="Gallery" description="Photographs of Samodus Hotels in Sabo, Sagamu: rooms, bathrooms, reception, exterior and parking.">
+<Base title="Gallery" description="Representative photographs for Samodus Hotels in Sabo, Sagamu, clearly labelled, with the hotel's own photography to follow.">
   <PageHead title="Gallery" lead="Rooms, bathrooms, the compound and the street outside.">
     {site.previewMode && (
       <div class="notice mt-6">
-        <p>Photography of the hotel is being produced. Frames below mark exactly what will be photographed; none of them is a stock image.</p>
+        <p>
+          Interior photographs below are licensed representative images, not pictures of this property, and each one
+          says so. The hotel's own photography replaces them as it is produced. Exterior and guest frames stay blank
+          until then rather than show a building or people that are not ours.
+        </p>
       </div>
     )}
   </PageHead>
@@ -19,4 +25,38 @@ import { site } from '@/config/site';
       <Gallery />
     </div>
   </section>
+
+  {creditList.length > 0 && (
+    <section class="section section--tint" aria-labelledby="cred-h">
+      <div class="container">
+        <h2 id="cred-h">Image credits</h2>
+        <p class="mt-4 measure">
+          Representative images are used under the <a href="https://unsplash.com/license" rel="noopener" target="_blank">Unsplash License</a> and are
+          credited here and in <a href="/images/CREDITS.md">CREDITS.md</a>.
+        </p>
+        <ul class="credits mt-6">
+          {creditList.map((s) => (
+            <li class="small">
+              <a href={s.credit!.sourceUrl} rel="noopener" target="_blank">{s.alt.replace(/^Representative image: /, '')}</a>
+              {' '}by{' '}
+              <a href={s.credit!.authorUrl} rel="noopener" target="_blank">{s.credit!.author}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 </Base>
+
+<style>
+  .credits {
+    display: grid;
+    gap: var(--s-2);
+    column-gap: var(--s-6);
+  }
+  @media (min-width: 720px) {
+    .credits {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

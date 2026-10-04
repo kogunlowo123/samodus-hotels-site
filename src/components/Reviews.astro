@@ -1,0 +1,153 @@
+---
+/**
+ * "What guests say". Shows the real Google rating and up to five real reviews
+ * when Places data is available, otherwise an honest empty state. Never
+ * invents a quote, a name or a number.
+ */
+import { getPlaceSummary } from '@/lib/places';
+import { site, writeReviewUrl } from '@/config/site';
+
+interface Props {
+  heading?: string;
+}
+const { heading = 'What guests say' } = Astro.props;
+const data = await getPlaceSummary();
+const pct = data ? Math.max(0, Math.min(100, (data.rating / 5) * 100)) : 0;
+---
+
+<section class="rv" aria-labelledby="rv-h">
+  <div class="container split">
+    <div class="stack">
+      <h2 id="rv-h">{heading}</h2>
+      {data ? (
+        <div class="rv__score">
+          <p class="rv__num">{data.rating.toFixed(1)}</p>
+          <div class="rv__stars" role="img" aria-label={`${data.rating.toFixed(1)} out of 5 stars`}>
+            <span class="rv__stars-bg" aria-hidden="true">★★★★★</span>
+            <span class="rv__stars-fg" aria-hidden="true" style={`width:${pct}%`}>★★★★★</span>
+          </div>
+          <p class="muted small">Based on {data.userRatingCount} Google review{data.userRatingCount === 1 ? '' : 's'}</p>
+        </div>
+      ) : (
+        <p class="lead">Reviews are collected on Google, where anyone who has stayed can write one and the hotel replies to each.</p>
+      )}
+      <div class="cluster">
+        <a class="btn btn--secondary" href={data?.googleMapsUri || site.mapsReviewsUrl} target="_blank" rel="noopener">
+          Read all reviews on Google<span class="visually-hidden"> (opens in new tab)</span>
+        </a>
+        <a class="btn btn--ghost" href={writeReviewUrl()} target="_blank" rel="noopener">
+          Write a review<span class="visually-hidden"> (opens in new tab)</span>
+        </a>
+      </div>
+      <p class="small muted">Ratings and reviews are provided by <strong>Google</strong>. We do not edit, select or write them.</p>
+    </div>
+
+    <div>
+      {data && data.reviews.length > 0 ? (
+        <ul class="rv__list">
+          {data.reviews.map((r) => (
+            <li class="rv__card">
+              <div class="rv__head">
+                {r.photo ? (
+                  <img class="rv__avatar" src={r.photo} alt="" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" />
+                ) : (
+                  <span class="rv__avatar rv__avatar--blank" aria-hidden="true">{r.author.slice(0, 1)}</span>
+                )}
+                <div>
+                  <p class="rv__author">{r.authorUrl ? <a href={r.authorUrl} target="_blank" rel="noopener">{r.author}</a> : r.author}</p>
+                  <p class="small muted">
+                    <span aria-label={`${r.rating} out of 5 stars`}>{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</span> · {r.relativeTime}
+                    {r.translated && ' · Translated by Google'}
+                  </p>
+                </div>
+              </div>
+              {r.text && <p class="rv__text">{r.text}</p>}
+              {r.url && (
+                <p class="small">
+                  <a href={r.url} target="_blank" rel="noopener">View on Google<span class="visually-hidden"> (opens in new tab)</span></a>
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="notice">
+          <p class="serif" style="font-size: var(--fs-2)">Be one of our first reviewers.</p>
+          <p class="mt-2">
+            {data
+              ? 'Google has not returned review text for this listing yet.'
+              : 'Live Google ratings will appear here once the hotel connects its Google listing. Until then, every review is on Google itself.'}
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rv {
+    padding-block: clamp(3rem, 6vw, 6rem);
+  }
+  .rv__score {
+    display: grid;
+    gap: var(--s-1);
+  }
+  .rv__num {
+    font-family: var(--font-serif);
+    font-size: var(--fs-6);
+    line-height: 1;
+  }
+  .rv__stars {
+    position: relative;
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    color: var(--line);
+    width: max-content;
+  }
+  .rv__stars-fg {
+    position: absolute;
+    inset: 0 auto 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--bronze);
+  }
+  .rv__list {
+    display: grid;
+    gap: var(--s-4);
+  }
+  .rv__card {
+    padding: var(--s-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    display: grid;
+    gap: var(--s-3);
+  }
+  .rv__head {
+    display: flex;
+    gap: var(--s-3);
+    align-items: center;
+  }
+  .rv__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+  }
+  .rv__avatar--blank {
+    display: grid;
+    place-items: center;
+    background: var(--tint-2);
+    color: var(--ink);
+    font-family: var(--font-serif);
+  }
+  .rv__author {
+    font-weight: 500;
+  }
+  .rv__text {
+    color: var(--ink-2);
+  }
+</style>

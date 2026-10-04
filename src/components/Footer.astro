@@ -41,7 +41,7 @@ const year = new Date().getFullYear();
           {hasWhatsApp() && <li><a href={whatsappHref()} rel="noopener">WhatsApp</a></li>}
           {hasEmail() && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
           <li><a href="/book">Send a booking enquiry</a></li>
-          <li><a href={site.mapsReviewsUrl} rel="noopener" target="_blank">Reviews on Google<span class="visually-hidden"> (opens in new tab)</span></a></li>
+          <li><a href="/reviews">Guest reviews</a></li>
         </ul>
       </div>
     </div>

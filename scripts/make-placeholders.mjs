@@ -23,7 +23,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 let count = 0;
 for (const slot of Object.values(images)) {
-  if (!slot.placeholder) continue;
+  if (slot.kind !== 'placeholder') continue;
   const { id, width: w, height: h } = slot;
   const label = esc(slot.caption || titleCase(id));
   const fs = Math.round(Math.min(w, h) / 14);
